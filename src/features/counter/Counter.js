@@ -19,6 +19,7 @@ export function Counter() {
 
   return (
     <div>
+      <p>did this update?</p>
       <div className={styles.row}>
         <button
           className={styles.button}
