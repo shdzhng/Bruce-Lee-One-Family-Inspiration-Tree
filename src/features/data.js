@@ -16,7 +16,7 @@ export const nodeData = [
   },
 
   {
-    id: 'Authur Schopenhauer',
+    id: 'Arthur Schopenhauer',
     color: 'white',
     group: 1,
   },
@@ -881,7 +881,7 @@ export const linkData = [
     value: 1,
   },
   {
-    source: 'Authur Schopenhauer',
+    source: 'Arthur Schopenhauer',
     target: 'Joseph Campbell',
     value: 1,
   },
@@ -906,12 +906,12 @@ export const linkData = [
     value: 1,
   },
   {
-    source: 'Authur Schopenhauer',
+    source: 'Arthur Schopenhauer',
     target: 'David Hume',
     value: 1,
   },
   {
-    source: 'Authur Schopenhauer',
+    source: 'Arthur Schopenhauer',
     target: 'Sigmund Freud',
     value: 1,
   },

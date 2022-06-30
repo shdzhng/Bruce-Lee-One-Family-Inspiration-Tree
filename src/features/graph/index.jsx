@@ -81,7 +81,7 @@ export function Graph() {
       return (
         <>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {/* {description.parse.title ? description.parse.title : 'WIP'} */}
+            {description.parse.title ? description.parse.title : 'WIP'}
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Work in Progress
