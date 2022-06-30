@@ -72,25 +72,13 @@ export function Graph() {
     setOpen(false);
   };
 
-  useEffect(() => {
-    console.log(description?.parse?.title);
-  }, [description]);
-
   const fetchData = useCallback((name) => {
+    const formattedName = name.split(' ').join('_');
     axios({
       method: 'get',
-      url:
-        'https://en.wikipedia.org/w/api.php?' +
-        new URLSearchParams({
-          origin: '*',
-          action: 'parse',
-          prop: 'text',
-          page: name,
-          format: 'json',
-        }),
+      url: `https://en.wikipedia.org/api/rest_v1/page/summary/${formattedName}`,
     }).then(({ data }) => {
-      console.log(data);
-      setDescription(data);
+      setDescription(data.extract);
     });
   }, []);
 
@@ -104,11 +92,11 @@ export function Graph() {
     if (description) {
       return (
         <Box>
-          <Title id="modal-modal-title" variant="h3" component="h1">
+          <Title id="modal-modal-title" variant="h4" component="h1">
             {name ? name : 'WIP'}
           </Title>
           <Summary id="modal-modal-description" sx={{ mt: 2 }}>
-            Work in Progress
+            {description ? description : 'WIP'}
           </Summary>
         </Box>
       );
