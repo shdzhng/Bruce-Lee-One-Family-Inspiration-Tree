@@ -16,13 +16,13 @@ export const nodeData = [
   },
 
   {
-    id: 'Authur Schopenhauser',
+    id: 'Arthur Schopenhauer',
     color: 'white',
     group: 1,
   },
   {
     id: 'Bruce Lee',
-    color: 'Yellow',
+    color: '#FED206',
     group: 1,
   },
   {
@@ -77,7 +77,7 @@ export const nodeData = [
     group: 1,
   },
   {
-    id: 'Arthur Schopenhauser',
+    id: 'Arthur Schopenhauer',
     color: 'white',
     group: 1,
   },
@@ -881,7 +881,7 @@ export const linkData = [
     value: 1,
   },
   {
-    source: 'Authur Schopenhauser',
+    source: 'Arthur Schopenhauer',
     target: 'Joseph Campbell',
     value: 1,
   },
@@ -906,12 +906,12 @@ export const linkData = [
     value: 1,
   },
   {
-    source: 'Authur Schopenhauser',
+    source: 'Arthur Schopenhauer',
     target: 'David Hume',
     value: 1,
   },
   {
-    source: 'Authur Schopenhauser',
+    source: 'Arthur Schopenhauer',
     target: 'Sigmund Freud',
     value: 1,
   },
@@ -1051,7 +1051,7 @@ export const linkData = [
     value: 1,
   },
   {
-    source: 'Arthur Schopenhauser',
+    source: 'Arthur Schopenhauer',
     target: 'Rene Descartes',
     value: 1,
   },
@@ -1071,7 +1071,7 @@ export const linkData = [
     value: 1,
   },
   {
-    source: 'Arthur Schopenhauser',
+    source: 'Arthur Schopenhauer',
     target: 'Sigmund Freud',
     value: 1,
   },
@@ -1081,7 +1081,7 @@ export const linkData = [
     value: 1,
   },
   {
-    source: 'Arthur Schopenhauser',
+    source: 'Arthur Schopenhauer',
     target: 'Johann Wolfgang von Goethe',
     value: 1,
   },
