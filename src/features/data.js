@@ -22,7 +22,7 @@ export const nodeData = [
   },
   {
     id: 'Bruce Lee',
-    color: 'Yellow',
+    color: '#FED206',
     group: 1,
   },
   {
