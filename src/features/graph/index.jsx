@@ -8,11 +8,13 @@ import React, {
 import axios from 'axios';
 import { ForceGraph2D } from 'react-force-graph';
 import { nodeData, linkData } from '../data';
-import { forceCollide } from 'd3';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { CircularProgress } from '@mui/material';
+import Backdrop from '@mui/material/Backdrop';
+import Fade from '@mui/material/Fade';
+import Slide from '@mui/material/Slide';
 
 const style = {
   position: 'absolute',
@@ -20,10 +22,15 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  bgcolor: '#FED206',
   boxShadow: 24,
   p: 4,
+};
+
+const modalStyles = {
+  overlay: {
+    backgroundColor: '#ffffff',
+  },
 };
 
 export function Graph() {
@@ -34,10 +41,15 @@ export function Graph() {
   });
   const [description, setDescription] = useState(null);
   const [open, setOpen] = React.useState(false);
-  const handleClose = () => setOpen(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const handleClose = () => {
+    setDescription(null);
+    setOpen(false);
+  };
 
   useEffect(() => {
-    console.log(description);
+    console.log(description?.parse?.title);
   }, [description]);
 
   const fetchData = useCallback((name) => {
@@ -59,27 +71,52 @@ export function Graph() {
   }, []);
 
   const handleClick = async (e) => {
-    await fetchData(e.id);
+    setLoading(true);
     setOpen(true);
+    await fetchData(e.id);
+  };
+
+  const renderModal = () => {
+    if (description) {
+      return (
+        <>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {/* {description.parse.title ? description.parse.title : 'WIP'} */}
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Work in Progress
+          </Typography>
+        </>
+      );
+    }
+
+    return (
+      <Box
+        style={{ display: 'flex', color: 'grey.500', justifyContent: 'center' }}
+      >
+        <CircularProgress color="inherit" />
+      </Box>
+    );
   };
 
   return (
     <>
       <Modal
+        closeTimeoutMS={500}
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        style={modalStyles}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
+        <Fade in={open}>
+          <Box sx={style}>{renderModal()}</Box>
+        </Fade>
       </Modal>
+
       <ForceGraph2D
         graphData={graphData}
         minZoom={2}
