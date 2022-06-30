@@ -8,13 +8,17 @@ import React, {
 import axios from 'axios';
 import { ForceGraph2D } from 'react-force-graph';
 import { nodeData, linkData } from '../data';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { CircularProgress } from '@mui/material';
-import Backdrop from '@mui/material/Backdrop';
-import Fade from '@mui/material/Fade';
-import Slide from '@mui/material/Slide';
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  Backdrop,
+  Fade,
+  Modal,
+  keyframes,
+} from '@mui/material';
+import styled from '@mui/material/styles/styled';
+import { useWindowSize } from '@react-hook/window-size';
 
 const style = {
   position: 'absolute',
@@ -27,21 +31,41 @@ const style = {
   p: 4,
 };
 
-const modalStyles = {
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const Title = styled(Typography)(() => ({
+  color: 'black',
+  textDecoration: 'underline',
+}));
+
+const Summary = styled(Typography)(() => ({
+  color: 'black',
+}));
+
+const StyledModal = styled(Modal)(() => ({
   overlay: {
     backgroundColor: '#ffffff',
   },
-};
+  animation: `${fadeIn} 0.75s ease-in-out both`,
+}));
 
 export function Graph() {
+  const [width, height] = useWindowSize();
   const fgRef = useRef();
   const [graphData, setGraphData] = useState({
     nodes: nodeData,
     links: linkData,
   });
   const [description, setDescription] = useState(null);
+  const [name, setName] = useState(null);
   const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
 
   const handleClose = () => {
     setDescription(null);
@@ -71,7 +95,7 @@ export function Graph() {
   }, []);
 
   const handleClick = async (e) => {
-    setLoading(true);
+    setName(e.id);
     setOpen(true);
     await fetchData(e.id);
   };
@@ -79,14 +103,14 @@ export function Graph() {
   const renderModal = () => {
     if (description) {
       return (
-        <>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            {description.parse.title ? description.parse.title : 'WIP'}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+        <Box>
+          <Title id="modal-modal-title" variant="h3" component="h1">
+            {name ? name : 'WIP'}
+          </Title>
+          <Summary id="modal-modal-description" sx={{ mt: 2 }}>
             Work in Progress
-          </Typography>
-        </>
+          </Summary>
+        </Box>
       );
     }
 
@@ -101,31 +125,26 @@ export function Graph() {
 
   return (
     <>
-      <Modal
-        closeTimeoutMS={500}
+      <StyledModal
         open={open}
         onClose={handleClose}
-        style={modalStyles}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
           timeout: 500,
         }}
+        disableAutoFocus={true}
       >
-        <Fade in={open}>
-          <Box sx={style}>{renderModal()}</Box>
-        </Fade>
-      </Modal>
+        <Box sx={style}>{renderModal()}</Box>
+      </StyledModal>
 
       <ForceGraph2D
         graphData={graphData}
         minZoom={2}
         maxZoom={10}
-        ///
         ref={fgRef}
-        cooldownTime={Infinity}
-        d3AlphaDecay={0}
-        ///
+        width={width}
+        height={height}
         backgroundColor="black"
         onNodeDragEnd={(node) => {
           node.fx = node.x;
@@ -169,7 +188,7 @@ export function Graph() {
 
           node.__bckgDimensions = bckgDimensions;
         }}
-      />
+      ></ForceGraph2D>
     </>
   );
 }
