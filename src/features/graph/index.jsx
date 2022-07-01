@@ -14,97 +14,29 @@ import {
   Typography,
   CircularProgress,
   Backdrop,
-  Fade,
-  Modal,
-  keyframes,
   AppBar,
   Button,
   Toolbar,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   Container,
 } from '@mui/material';
-import styled from '@mui/material/styles/styled';
 import { useWindowSize } from '@react-hook/window-size';
 import SportsMartialArtsIcon from '@mui/icons-material/SportsMartialArts';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import CircleIcon from '@mui/icons-material/Circle';
-const welcomeModalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: '#FED206',
-  boxShadow: 24,
-  p: 4,
-  ['@media (max-width:500px)']: {
-    bgcolor: 'orange',
-    width: '75vw',
-    gridTemplateColumns: `repeat(1, 1fr)`,
-  },
-};
-
-const gridModalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '50vw',
-  bgcolor: '#FED206',
-  boxShadow: 24,
-  p: 4,
-  display: 'grid',
-  columnGap: 3,
-  rowGap: 1,
-  gridTemplateColumns: '2fr 1fr',
-
-  ['@media (max-width:800px)']: {
-    bgcolor: 'red',
-    width: '75vw',
-    gridTemplateColumns: `repeat(1, 1fr)`,
-  },
-};
-
-const Title = styled(Typography)(() => ({
-  color: 'black',
-  textDecoration: 'underline',
-
-  ['@media (max-width:900px)']: {
-    fontSize: '20px',
-  },
-}));
-
-const Summary = styled(Typography)(() => ({
-  color: 'black',
-  marginTop: '1em',
-  ['@media (max-width:900px)']: {
-    fontSize: '14px',
-  },
-}));
-
-const StyledModal = styled(Modal)(() => ({
-  overlay: {
-    backgroundColor: '#ffffff',
-  },
-  animation: `${fadeIn} 0.75s ease-in-out both`,
-}));
-
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
+import {
+  welcomeModalStyle,
+  gridModalStyle,
+  StyledModal,
+  Title,
+  Summary,
+} from '../../constants/styles';
+import message from '../../constants/message';
 
 export function Graph() {
   const [width, height] = useWindowSize();
@@ -122,10 +54,6 @@ export function Graph() {
   const [bionicMode, setBionicMode] = React.useState(false);
   const [language, setLanguage] = useState('en');
 
-  ///
-
-  ///
-
   const handleClose = () => {
     setDescription(null);
     setOpenDescriptionModal(false);
@@ -138,10 +66,6 @@ export function Graph() {
     setLanguage(event.target.value);
   };
 
-  const handleError = useCallback((name) => {
-    fetchData(name, 'en');
-  }, []);
-
   const fetchData = useCallback(
     (name, language) => {
       const formattedName = name.split(' ').join('_');
@@ -151,8 +75,6 @@ export function Graph() {
         url: `https://${language}.wikipedia.org/api/rest_v1/page/summary/${formattedName}`,
       })
         .then(({ data }) => {
-          setSummary(data.description);
-          setThumbnail(data.thumbnail);
           if (bionicMode === true && language === 'en') {
             const formattedDescrip = data.extract
               .split(' ')
@@ -167,13 +89,16 @@ export function Graph() {
                 return word;
               })
               .join(' ');
+
             setDescription({ __html: formattedDescrip });
           } else {
             setDescription(data.extract);
           }
+          setSummary(data.description);
+          setThumbnail(data.thumbnail);
         })
         .catch((err) => {
-          handleError(name);
+          fetchData(name, 'en');
         });
     },
     [bionicMode]
@@ -203,6 +128,18 @@ export function Graph() {
               <Button
                 onClick={(e) => {
                   e.preventDefault();
+                  setBionicMode((bionicMode) => !bionicMode);
+                }}
+              >
+                {language !== 'en' ? null : bionicMode ? (
+                  <VisibilityIcon style={{ fill: 'Black' }} />
+                ) : (
+                  <VisibilityOffIcon style={{ fill: 'Black' }} />
+                )}
+              </Button>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
                   setOpenLandingModal(true);
                 }}
                 sx={{
@@ -211,19 +148,7 @@ export function Graph() {
                   color: 'Black',
                 }}
               >
-                ABOUT
-              </Button>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setBionicMode((bionicMode) => !bionicMode);
-                }}
-              >
-                {bionicMode ? (
-                  <VisibilityIcon style={{ fill: 'Black' }} />
-                ) : (
-                  <VisibilityOffIcon style={{ fill: 'Black' }} />
-                )}
+                INFO
               </Button>
 
               <FormControl>
@@ -322,17 +247,21 @@ export function Graph() {
         disableAutoFocus={true}
       >
         <Box sx={welcomeModalStyle}>
-          <Typography>
-            Hello and welcome to this digital exhibition of ideas that shaped
-            Bruce Lee's attitude and outlook on life, success, martial arts and
-            how he went on to inspire generations to come.
+          <Typography>{message.p1[language]}</Typography>
+          <Typography
+            sx={{
+              mt: 2,
+              p: 1,
+              backgroundColor: 'black',
+              fontSize: 12,
+              color: '#FED206',
+              fontStyle: 'italic',
+            }}
+          >
+            {message.p2[language]}
           </Typography>
 
-          <Typography sx={{ mt: 2 }}>
-            This digital exhibition encourages you to explore the rich diversity
-            of perspectives that Bruce Lee sought to understand across racial,
-            ethic, sexual,religious, national, and political differences.
-          </Typography>
+          <Typography sx={{ mt: 2 }}>{message.p3[language]}</Typography>
 
           <List
             sx={{
@@ -347,8 +276,7 @@ export function Graph() {
             <ListItem>
               <ListItemText>
                 <Typography sx={{ fontSize: 'inherit', color: 'inherit' }}>
-                  - All name bubbles are interactive (click for pop-up & drag to
-                  move).
+                  {message.list.p1[language]}
                 </Typography>
               </ListItemText>
             </ListItem>
@@ -356,9 +284,7 @@ export function Graph() {
             <ListItem>
               <ListItemText>
                 <Typography sx={{ fontSize: 'inherit' }}>
-                  - This exhibition also offers bionic reading mode, click on{' '}
-                  <VisibilityOffIcon style={{ fontSize: 'inherit' }} /> at the
-                  top right to toggle on.
+                  {message.list.p2[language]}
                 </Typography>
               </ListItemText>
             </ListItem>
@@ -366,18 +292,14 @@ export function Graph() {
             <ListItem>
               <ListItemText>
                 <Typography sx={{ fontSize: 'inherit' }}>
-                  - Language options are available for your convenience. Note
-                  not all writings will be avaialble in your selected language,
-                  in such case English will be used.
+                  {message.list.p3[language]}
                 </Typography>
               </ListItemText>
             </ListItem>
           </List>
 
           <Typography sx={{ mt: 2, fontStyle: 'italic', fontSize: 10 }}>
-            "I, Bruce Lee, am a man who never follows these formulas of the fear
-            mongers. So, no matter if your color is black or white,red or blue,
-            I can still make friends with you without any barriers" - Bruce Lee
+            {message.p4[language]}
           </Typography>
         </Box>
       </StyledModal>
@@ -385,7 +307,7 @@ export function Graph() {
       <ForceGraph2D
         graphData={graphData}
         minZoom={2}
-        maxZoom={10}
+        maxZoom={5}
         ref={fgRef}
         width={width}
         height={height * 0.93}
@@ -398,7 +320,6 @@ export function Graph() {
         nodePointerAreaPaint={(node, color, ctx) => {
           ctx.fillStyle = color;
           const bckgDimensions = node.__bckgDimensions;
-
           bckgDimensions && ctx.beginPath();
           ctx.arc(node.x, node.y, 15, 0, 2 * Math.PI, false);
           ctx.fill();
@@ -406,7 +327,7 @@ export function Graph() {
         onNodeClick={(e) => {
           handleClick(e);
         }}
-        linkLabel={(link) => `${link.source.id} -> ${link.target.id}`}
+        linkLabel={(link) => `${link.source.id} & ${link.target.id}`}
         linkColor={({ source, target }) => {
           if (source.id === 'Bruce Lee' || target.id === 'Bruce Lee')
             return '#FED206';
