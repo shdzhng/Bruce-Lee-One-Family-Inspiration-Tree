@@ -6,8 +6,9 @@ import React, {
   useCallback,
 } from 'react';
 import axios from 'axios';
-import { ForceGraph2D, onRenderFramePre } from 'react-force-graph';
+import { ForceGraph2D } from 'react-force-graph';
 import { nodeData, linkData } from '../data';
+import { US, TW, ES, IT, DE, FR } from 'country-flag-icons/react/3x2';
 import {
   Box,
   Typography,
@@ -18,20 +19,23 @@ import {
   keyframes,
   AppBar,
   Button,
-  Item,
+  Toolbar,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Container,
 } from '@mui/material';
 import styled from '@mui/material/styles/styled';
 import { useWindowSize } from '@react-hook/window-size';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
 import SportsMartialArtsIcon from '@mui/icons-material/SportsMartialArts';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import CircleIcon from '@mui/icons-material/Circle';
 const welcomeModalStyle = {
   position: 'absolute',
   top: '50%',
@@ -116,47 +120,68 @@ export function Graph() {
   const [openDescriptionModal, setOpenDescriptionModal] = React.useState(false);
   const [openLandingModal, setOpenLandingModal] = React.useState(true);
   const [bionicMode, setBionicMode] = React.useState(false);
+  const [language, setLanguage] = useState('en');
+
+  ///
+
+  ///
 
   const handleClose = () => {
     setDescription(null);
     setOpenDescriptionModal(false);
+    setName(null);
+    setThumbnail(null);
+    setSummary(null);
   };
 
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+  };
+
+  const handleError = useCallback((name) => {
+    fetchData(name, 'en');
+  }, []);
+
   const fetchData = useCallback(
-    (name) => {
+    (name, language) => {
       const formattedName = name.split(' ').join('_');
+
       axios({
         method: 'get',
-        url: `https://en.wikipedia.org/api/rest_v1/page/summary/${formattedName}`,
-      }).then(({ data }) => {
-        setSummary(data.description);
-        setThumbnail(data.thumbnail);
-        if (bionicMode === true) {
-          const formattedDescrip = data.extract
-            .split(' ')
-            .map((word) => {
-              const halfLength = Math.ceil(word.length / 2);
-              if (halfLength > 1) {
-                return `<strong>${word.slice(
-                  0,
-                  halfLength
-                )}</strong>${word.slice(halfLength, word.length)}`;
-              }
-              return word;
-            })
-            .join(' ');
-          setDescription({ __html: formattedDescrip });
-        } else {
-          setDescription(data.extract);
-        }
-      });
+        url: `https://${language}.wikipedia.org/api/rest_v1/page/summary/${formattedName}`,
+      })
+        .then(({ data }) => {
+          setSummary(data.description);
+          setThumbnail(data.thumbnail);
+          if (bionicMode === true && language === 'en') {
+            const formattedDescrip = data.extract
+              .split(' ')
+              .map((word) => {
+                const halfLength = Math.ceil(word.length / 2);
+                if (halfLength > 1) {
+                  return `<strong>${word.slice(
+                    0,
+                    halfLength
+                  )}</strong>${word.slice(halfLength, word.length)}`;
+                }
+                return word;
+              })
+              .join(' ');
+            setDescription({ __html: formattedDescrip });
+          } else {
+            setDescription(data.extract);
+          }
+        })
+        .catch((err) => {
+          handleError(name);
+        });
     },
     [bionicMode]
   );
 
   const handleClick = async (e) => {
     setName(e.id);
-    await fetchData(e.id);
+    await fetchData(e.id, language);
     setOpenDescriptionModal(true);
   };
 
@@ -173,6 +198,7 @@ export function Graph() {
             }}
           >
             <SportsMartialArtsIcon style={{ fill: 'Black' }} />
+
             <Box sx={{ display: 'flex' }}>
               <Button
                 onClick={(e) => {
@@ -185,7 +211,7 @@ export function Graph() {
                   color: 'Black',
                 }}
               >
-                ABOUT ME
+                ABOUT
               </Button>
               <Button
                 onClick={(e) => {
@@ -199,6 +225,37 @@ export function Graph() {
                   <VisibilityOffIcon style={{ fill: 'Black' }} />
                 )}
               </Button>
+
+              <FormControl>
+                <Select
+                  variant="standard"
+                  labelId="language-select-label"
+                  id="language-select"
+                  value={language}
+                  label="Language"
+                  onChange={handleLanguageChange}
+                  disableUnderline
+                >
+                  <MenuItem value={'en'}>
+                    <US title="English" />
+                  </MenuItem>
+                  <MenuItem value={'zh'}>
+                    <TW title="繁体中文" />
+                  </MenuItem>
+                  <MenuItem value={'es'}>
+                    <ES title="Español" />
+                  </MenuItem>
+                  <MenuItem value={'it'}>
+                    <IT title="Italiano" />
+                  </MenuItem>
+                  <MenuItem value={'fr'}>
+                    <FR title="Français" />
+                  </MenuItem>
+                  <MenuItem value={'de'}>
+                    <DE title="Deutsch" />
+                  </MenuItem>
+                </Select>
+              </FormControl>
             </Box>
           </Toolbar>
         </Container>
@@ -221,9 +278,11 @@ export function Graph() {
             </Title>
 
             <Typography sx={{ mt: 0, fontStyle: 'italic', fontSize: 13 }}>
-              {summary}
+              {summary === 'Topics referred to by the same term'
+                ? null
+                : summary}
             </Typography>
-            {bionicMode ? (
+            {bionicMode && language === 'en' ? (
               <Summary dangerouslySetInnerHTML={description} />
             ) : (
               <Summary> {description} </Summary>
@@ -275,16 +334,46 @@ export function Graph() {
             ethic, sexual,religious, national, and political differences.
           </Typography>
 
-          <Typography sx={{ mt: 2 }}>
-            This exhibition has bionic reading enabled, click on
-            <VisibilityIcon style={{ fill: 'Black', fontSize: 'inherit' }} />
-            <VisibilityOffIcon
-              style={{ fill: 'Black', fontSize: 'inherit' }}
-            />{' '}
-            at the top right to toggle.
-          </Typography>
+          <List
+            sx={{
+              mt: 2,
+              fontSize: 12,
+              color: '#FED206',
+              backgroundColor: 'black',
+            }}
+            dense={true}
+            disablePadding={true}
+          >
+            <ListItem>
+              <ListItemText>
+                <Typography sx={{ fontSize: 'inherit', color: 'inherit' }}>
+                  - All name bubbles are interactive (click for pop-up & drag to
+                  move).
+                </Typography>
+              </ListItemText>
+            </ListItem>
 
-          <br />
+            <ListItem>
+              <ListItemText>
+                <Typography sx={{ fontSize: 'inherit' }}>
+                  - This exhibition also offers bionic reading mode, click on{' '}
+                  <VisibilityOffIcon style={{ fontSize: 'inherit' }} /> at the
+                  top right to toggle on.
+                </Typography>
+              </ListItemText>
+            </ListItem>
+
+            <ListItem>
+              <ListItemText>
+                <Typography sx={{ fontSize: 'inherit' }}>
+                  - Language options are available for your convenience. Note
+                  not all writings will be avaialble in your selected language,
+                  in such case English will be used.
+                </Typography>
+              </ListItemText>
+            </ListItem>
+          </List>
+
           <Typography sx={{ mt: 2, fontStyle: 'italic', fontSize: 10 }}>
             "I, Bruce Lee, am a man who never follows these formulas of the fear
             mongers. So, no matter if your color is black or white,red or blue,
@@ -324,7 +413,7 @@ export function Graph() {
           return 'gray';
         }}
         nodeCanvasObject={(node, ctx, globalScale) => {
-          const label = node.id;
+          const label = node[language];
           const fontSize =
             label === 'Bruce Lee' ? 12 / globalScale : 11 / globalScale;
           ctx.font = `${fontSize}px Sans-Serif`;
