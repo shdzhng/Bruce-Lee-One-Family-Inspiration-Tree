@@ -76,11 +76,7 @@ export const nodeData = [
     color: 'white',
     group: 1,
   },
-  {
-    id: 'Arthur Schopenhauer',
-    color: 'white',
-    group: 1,
-  },
+
   {
     id: 'Baron de Montesquieu',
     color: 'white',
@@ -188,7 +184,7 @@ export const nodeData = [
     group: 1,
   },
   {
-    id: 'William E Bauch',
+    id: 'Johann Sebastian Bach',
     color: 'white',
     group: 1,
   },
@@ -208,7 +204,7 @@ export const nodeData = [
     group: 1,
   },
   {
-    id: 'St.Thomas Acquinas',
+    id: 'Thomas Aquinas',
     color: 'white',
     group: 1,
   },
@@ -380,7 +376,7 @@ export const nodeData = [
     group: 1,
   },
   {
-    id: 'James Allen',
+    id: 'James Allen (author)',
     color: 'white',
     group: 1,
   },
@@ -457,7 +453,7 @@ export const nodeData = [
     group: 1,
   },
   {
-    id: 'Carl Roger',
+    id: 'Carl Rogers',
     color: 'white',
     group: 1,
   },
@@ -741,12 +737,12 @@ export const linkData = [
     value: 1,
   },
   {
-    source: 'James Allen',
+    source: 'James Allen (author)',
     target: 'Bruce Lee',
     value: 1,
   },
   {
-    source: 'James Allen',
+    source: 'James Allen (author)',
     target: 'Gucci Mane',
     value: 1,
   },
@@ -811,12 +807,12 @@ export const linkData = [
     value: 1,
   },
   {
-    source: 'Carl Roger',
+    source: 'Carl Rogers',
     target: 'Bruce Lee',
     value: 1,
   },
   {
-    source: 'Carl Roger',
+    source: 'Carl Rogers',
     target: 'Carl Jung',
     value: 1,
   },
@@ -837,7 +833,7 @@ export const linkData = [
   },
   {
     source: 'Bruce Lee',
-    target: 'St.Thomas Acquinas',
+    target: 'Thomas Aquinas',
     value: 1,
   },
   {
@@ -1092,7 +1088,7 @@ export const linkData = [
   },
 
   {
-    source: 'William E Bauch',
+    source: 'Johann Sebastian Bach',
     target: 'Johann Wolfgang von Goethe',
     value: 1,
   },
@@ -1149,7 +1145,7 @@ export const linkData = [
   },
   {
     source: 'Aristotle',
-    target: 'St.Thomas Acquinas',
+    target: 'Thomas Aquinas',
     value: 1,
   },
   {
