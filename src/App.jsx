@@ -1,6 +1,6 @@
 import React from 'react';
 import { Graph } from './features/graph';
-import GlobalStyle from './constants/globalStyle';
+import { GlobalStyle } from './constants/styles';
 
 function App() {
   return (
