@@ -62,7 +62,7 @@ const gridModalStyle = {
   rowGap: 1,
   gridTemplateColumns: '2fr 1fr',
 
-  ['@media (max-width:900px)']: {
+  ['@media (max-width:800px)']: {
     bgcolor: 'red',
     width: '75vw',
     gridTemplateColumns: `repeat(1, 1fr)`,
@@ -112,6 +112,7 @@ export function Graph() {
   const [description, setDescription] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
   const [name, setName] = useState(null);
+  const [summary, setSummary] = useState(null);
   const [openDescriptionModal, setOpenDescriptionModal] = React.useState(false);
   const [openLandingModal, setOpenLandingModal] = React.useState(true);
   const [bionicMode, setBionicMode] = React.useState(false);
@@ -128,6 +129,7 @@ export function Graph() {
         method: 'get',
         url: `https://en.wikipedia.org/api/rest_v1/page/summary/${formattedName}`,
       }).then(({ data }) => {
+        setSummary(data.description);
         setThumbnail(data.thumbnail);
         if (bionicMode === true) {
           const formattedDescrip = data.extract
@@ -217,6 +219,10 @@ export function Graph() {
             <Title id="modal-modal-title" variant="h5" component="h1">
               {name ? name : 'WIP'}
             </Title>
+
+            <Typography sx={{ mt: 0, fontStyle: 'italic', fontSize: 13 }}>
+              {summary}
+            </Typography>
             {bionicMode ? (
               <Summary dangerouslySetInnerHTML={description} />
             ) : (
@@ -265,7 +271,7 @@ export function Graph() {
 
           <Typography sx={{ mt: 2 }}>
             This digital exhibition encourages you to explore the rich diversity
-            of perspectives that Bruce Lee sought to understand despite racial,
+            of perspectives that Bruce Lee sought to understand across racial,
             ethic, sexual,religious, national, and political differences.
           </Typography>
 
