@@ -335,6 +335,7 @@ export function Graph() {
         }}
         nodeCanvasObject={(node, ctx, globalScale) => {
           const label = node[language];
+          const color = node.color;
           const fontSize =
             label === 'Bruce Lee' ? 12 / globalScale : 11 / globalScale;
           ctx.font = `${fontSize}px Sans-Serif`;
@@ -343,7 +344,7 @@ export function Graph() {
             (n) => n + fontSize * 0.2
           );
 
-          ctx.fillStyle = label === 'Bruce Lee' ? '#FED206' : 'gray';
+          ctx.fillStyle = color;
 
           ctx.beginPath();
           ctx.arc(
