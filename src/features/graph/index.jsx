@@ -15,19 +15,18 @@ import {
   CircularProgress,
   Backdrop,
   AppBar,
+  Zoom,
   Button,
   Toolbar,
   List,
   ListItem,
   ListItemText,
   Container,
-  TextField,
   FormControlLabel,
-  Checkbox,
   FormControl,
   MenuItem,
   Select,
-  FormHelperText,
+  Fade,
 } from '@mui/material';
 import { useWindowSize } from '@react-hook/window-size';
 import SportsMartialArtsIcon from '@mui/icons-material/SportsMartialArts';
@@ -66,22 +65,33 @@ export function Graph() {
   const [name, setName] = useState(null);
   const [summary, setSummary] = useState(null);
   const [openDescriptionModal, setOpenDescriptionModal] = React.useState(false);
-  const [openLandingModal, setOpenLandingModal] = React.useState(true);
+  const [openLandingModal, setOpenLandingModal] = React.useState(false);
   const [openAddModal, setAddModal] = React.useState(false);
   const [bionicMode, setBionicMode] = React.useState(false);
   const [language, setLanguage] = useState('en');
 
+  useEffect(() => {
+    setTimeout(() => {
+      setOpenLandingModal(true);
+    }, 300);
+  }, []);
+
   const handleClose = () => {
-    setDescription(null);
-    setName(null);
-    setThumbnail(null);
-    setSummary(null);
     setOpenDescriptionModal(false);
+    setOpenLandingModal(false);
     setAddModal(false);
+
+    setTimeout(() => {
+      setDescription(null);
+      setName(null);
+      setThumbnail(null);
+      setSummary(null);
+    }, 500);
   };
 
   const handleSubmit = () => {
     console.log(visitorData);
+    setAddModal(false);
   };
 
   const handleInputChange = (e) => {
@@ -238,56 +248,58 @@ export function Graph() {
         }}
         disableAutoFocus={true}
       >
-        <InputContainer>
-          <FormControl>
-            <InputField
-              id="firstName"
-              placeholder="First Name"
-              value={visitorData.firstName}
-              onChange={(e) => {
-                handleInputChange(e);
-              }}
-            ></InputField>
-            <InputField
-              id="lastName"
-              placeholder="Last Name"
-              value={visitorData.lastName}
-              onChange={(e) => {
-                handleInputChange(e);
-              }}
-            ></InputField>
-            <InputField
-              id="email"
-              placeholder="Email"
-              value={visitorData.email}
-              onChange={(e) => {
-                handleInputChange(e);
-              }}
-            ></InputField>
-            <FormControlLabel
-              control={
-                <SubscriptionCheckBox
-                  style={{
-                    color: 'black',
-                  }}
-                  checked={visitorData.subscription}
-                  id="subscription"
-                  onChange={(e) => {
-                    handleInputChange(e);
-                  }}
-                />
-              }
-              label="Subscribe to CHSA Newsletter"
-            />
-            <SubmitButton
-              onClick={() => {
-                handleSubmit();
-              }}
-            >
-              Submit
-            </SubmitButton>
-          </FormControl>
-        </InputContainer>
+        <Fade in={openAddModal} timeout={300}>
+          <InputContainer>
+            <FormControl>
+              <InputField
+                id="firstName"
+                placeholder="First Name"
+                value={visitorData.firstName}
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
+              ></InputField>
+              <InputField
+                id="lastName"
+                placeholder="Last Name"
+                value={visitorData.lastName}
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
+              ></InputField>
+              <InputField
+                id="email"
+                placeholder="Email"
+                value={visitorData.email}
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
+              ></InputField>
+              <FormControlLabel
+                control={
+                  <SubscriptionCheckBox
+                    style={{
+                      color: 'black',
+                    }}
+                    checked={visitorData.subscription}
+                    id="subscription"
+                    onChange={(e) => {
+                      handleInputChange(e);
+                    }}
+                  />
+                }
+                label="Subscribe to CHSA Newsletter"
+              />
+              <SubmitButton
+                onClick={() => {
+                  handleSubmit();
+                }}
+              >
+                Submit
+              </SubmitButton>
+            </FormControl>
+          </InputContainer>
+        </Fade>
       </StyledModal>
 
       <StyledModal
@@ -300,42 +312,44 @@ export function Graph() {
         }}
         disableAutoFocus={true}
       >
-        <Box sx={gridModalStyle}>
-          <Box id="modal-modal-description" sx={{ mt: 2 }}>
-            <Title id="modal-modal-title" variant="h5" component="h1">
-              {name ? name : 'WIP'}
-            </Title>
+        <Fade timeout={500} in={openDescriptionModal}>
+          <Box sx={gridModalStyle}>
+            <Box id="modal-modal-description" sx={{ mt: 2 }}>
+              <Title id="modal-modal-title" variant="h5" component="h1">
+                {name ? name : 'WIP'}
+              </Title>
 
-            <Typography sx={{ mt: 0, fontStyle: 'italic', fontSize: 13 }}>
-              {summary === 'Topics referred to by the same term'
-                ? null
-                : summary}
-            </Typography>
-            {bionicMode && language === 'en' ? (
-              <Summary dangerouslySetInnerHTML={description} />
-            ) : (
-              <Summary> {description} </Summary>
-            )}
-          </Box>
+              <Typography sx={{ mt: 0, fontStyle: 'italic', fontSize: 13 }}>
+                {summary === 'Topics referred to by the same term'
+                  ? null
+                  : summary}
+              </Typography>
+              {bionicMode && language === 'en' ? (
+                <Summary dangerouslySetInnerHTML={description} />
+              ) : (
+                <Summary> {description} </Summary>
+              )}
+            </Box>
 
-          <Box alignContent="center" alignItems="center">
-            {thumbnail ? (
-              <img
-                src={thumbnail.source}
-                width={200}
-                alt={`${name}'s portrait`}
-              />
-            ) : (
-              <img
-                src={
-                  'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
-                }
-                width={200}
-                alt={`${name}'s portrait`}
-              />
-            )}
+            <Box alignContent="center" alignItems="center">
+              {thumbnail ? (
+                <img
+                  src={thumbnail.source}
+                  width={200}
+                  alt={`${name}'s portrait`}
+                />
+              ) : (
+                <img
+                  src={
+                    'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
+                  }
+                  width={200}
+                  alt={`${name}'s portrait`}
+                />
+              )}
+            </Box>
           </Box>
-        </Box>
+        </Fade>
       </StyledModal>
 
       <StyledModal
@@ -350,62 +364,64 @@ export function Graph() {
         }}
         disableAutoFocus={true}
       >
-        <Box sx={welcomeModalStyle}>
-          <Typography>{message.p1[language]}</Typography>
-          <Typography
-            sx={{
-              mt: 2,
-              p: 1,
-              backgroundColor: 'black',
-              fontSize: 12,
-              color: '#FED206',
-              fontStyle: 'italic',
-            }}
-          >
-            {message.p2[language]}
-          </Typography>
+        <Fade in={openLandingModal} timeout={400}>
+          <Box sx={welcomeModalStyle}>
+            <Typography>{message.p1[language]}</Typography>
+            <Typography
+              sx={{
+                mt: 2,
+                p: 1,
+                backgroundColor: 'black',
+                fontSize: 12,
+                color: '#FED206',
+                fontStyle: 'italic',
+              }}
+            >
+              {message.p2[language]}
+            </Typography>
 
-          <Typography sx={{ mt: 2 }}>{message.p3[language]}</Typography>
+            <Typography sx={{ mt: 2 }}>{message.p3[language]}</Typography>
 
-          <List
-            sx={{
-              mt: 2,
-              fontSize: 12,
-              color: '#FED206',
-              backgroundColor: 'black',
-            }}
-            dense={true}
-            disablePadding={true}
-          >
-            <ListItem>
-              <ListItemText>
-                <Typography sx={{ fontSize: 'inherit', color: 'inherit' }}>
-                  {message.list.p1[language]}
-                </Typography>
-              </ListItemText>
-            </ListItem>
+            <List
+              sx={{
+                mt: 2,
+                fontSize: 12,
+                color: '#FED206',
+                backgroundColor: 'black',
+              }}
+              dense={true}
+              disablePadding={true}
+            >
+              <ListItem>
+                <ListItemText>
+                  <Typography sx={{ fontSize: 'inherit', color: 'inherit' }}>
+                    {message.list.p1[language]}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
 
-            <ListItem>
-              <ListItemText>
-                <Typography sx={{ fontSize: 'inherit' }}>
-                  {message.list.p2[language]}
-                </Typography>
-              </ListItemText>
-            </ListItem>
+              <ListItem>
+                <ListItemText>
+                  <Typography sx={{ fontSize: 'inherit' }}>
+                    {message.list.p2[language]}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
 
-            <ListItem>
-              <ListItemText>
-                <Typography sx={{ fontSize: 'inherit' }}>
-                  {message.list.p3[language]}
-                </Typography>
-              </ListItemText>
-            </ListItem>
-          </List>
+              <ListItem>
+                <ListItemText>
+                  <Typography sx={{ fontSize: 'inherit' }}>
+                    {message.list.p3[language]}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            </List>
 
-          <Typography sx={{ mt: 2, fontStyle: 'italic', fontSize: 10 }}>
-            {message.p4[language]}
-          </Typography>
-        </Box>
+            <Typography sx={{ mt: 2, fontStyle: 'italic', fontSize: 10 }}>
+              {message.p4[language]}
+            </Typography>
+          </Box>
+        </Fade>
       </StyledModal>
 
       <ForceGraph2D

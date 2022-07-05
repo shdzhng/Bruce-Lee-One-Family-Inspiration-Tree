@@ -14,6 +14,7 @@ import {
 const GlobalStyle = createGlobalStyle`
   html,
   body,
+
   #root {
     padding: 0px;
     margin: 0px;
@@ -152,17 +153,20 @@ const Title = styled(Typography)(() => ({
 const Summary = styled(Typography)(() => ({
   color: 'black',
   marginTop: '1em',
+
   ['@media (max-width:900px)']: {
     fontSize: '14px',
   },
 }));
 
-const StyledModal = styled(Modal)(() => ({
-  overlay: {
-    backgroundColor: '#ffffff',
-  },
-  animation: `${fadeIn} 0.75s ease-in-out both`,
-}));
+const fadeOut = keyframes`
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
 
 const fadeIn = keyframes`
   0% {
@@ -172,6 +176,12 @@ const fadeIn = keyframes`
     opacity: 1;
   }
 `;
+
+const StyledModal = styled(Modal)((props) => ({
+  overlay: {
+    backgroundColor: '#ffffff',
+  },
+}));
 
 export {
   GlobalStyle,
