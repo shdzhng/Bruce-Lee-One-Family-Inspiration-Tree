@@ -21,22 +21,32 @@ import {
   ListItem,
   ListItemText,
   Container,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  FormControl,
+  MenuItem,
+  Select,
+  FormHelperText,
 } from '@mui/material';
 import { useWindowSize } from '@react-hook/window-size';
 import SportsMartialArtsIcon from '@mui/icons-material/SportsMartialArts';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import {
   welcomeModalStyle,
   gridModalStyle,
+  InputContainer,
   StyledModal,
   Title,
+  InputField,
+  SubscriptionCheckBox,
   Summary,
+  SubmitButton,
 } from '../../constants/styles';
 import message from '../../constants/message';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { FloatButton } from '../../constants/styles';
 
 export function Graph() {
   const [width, height] = useWindowSize();
@@ -46,20 +56,52 @@ export function Graph() {
     links: linkData,
   });
   const [description, setDescription] = useState(null);
+  const [visitorData, setVisitorData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    subscription: true,
+  });
   const [thumbnail, setThumbnail] = useState(null);
   const [name, setName] = useState(null);
   const [summary, setSummary] = useState(null);
   const [openDescriptionModal, setOpenDescriptionModal] = React.useState(false);
   const [openLandingModal, setOpenLandingModal] = React.useState(true);
+  const [openAddModal, setAddModal] = React.useState(false);
   const [bionicMode, setBionicMode] = React.useState(false);
   const [language, setLanguage] = useState('en');
 
   const handleClose = () => {
     setDescription(null);
-    setOpenDescriptionModal(false);
     setName(null);
     setThumbnail(null);
     setSummary(null);
+    setOpenDescriptionModal(false);
+    setAddModal(false);
+  };
+
+  const handleSubmit = () => {
+    console.log(visitorData);
+  };
+
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    const { id, value } = e.target;
+    if (id === 'subscription') {
+      setVisitorData({
+        ...visitorData,
+        subscription: !visitorData.subscription,
+      });
+      return;
+    }
+    setVisitorData({
+      ...visitorData,
+      [id]: value,
+    });
+  };
+
+  const handleAdd = () => {
+    setAddModal(true);
   };
 
   const handleLanguageChange = (event) => {
@@ -185,6 +227,68 @@ export function Graph() {
           </Toolbar>
         </Container>
       </AppBar>
+
+      <StyledModal
+        open={openAddModal}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        disableAutoFocus={true}
+      >
+        <InputContainer>
+          <FormControl>
+            <InputField
+              id="firstName"
+              placeholder="First Name"
+              value={visitorData.firstName}
+              onChange={(e) => {
+                handleInputChange(e);
+              }}
+            ></InputField>
+            <InputField
+              id="lastName"
+              placeholder="Last Name"
+              value={visitorData.lastName}
+              onChange={(e) => {
+                handleInputChange(e);
+              }}
+            ></InputField>
+            <InputField
+              id="email"
+              placeholder="Email"
+              value={visitorData.email}
+              onChange={(e) => {
+                handleInputChange(e);
+              }}
+            ></InputField>
+            <FormControlLabel
+              control={
+                <SubscriptionCheckBox
+                  style={{
+                    color: 'black',
+                  }}
+                  checked={visitorData.subscription}
+                  id="subscription"
+                  onChange={(e) => {
+                    handleInputChange(e);
+                  }}
+                />
+              }
+              label="Subscribe to CHSA Newsletter"
+            />
+            <SubmitButton
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              Submit
+            </SubmitButton>
+          </FormControl>
+        </InputContainer>
+      </StyledModal>
 
       <StyledModal
         open={openDescriptionModal}
@@ -365,6 +469,16 @@ export function Graph() {
           node.__bckgDimensions = bckgDimensions;
         }}
       ></ForceGraph2D>
+
+      <FloatButton
+        variant="extended"
+        onClick={() => {
+          handleAdd();
+        }}
+      >
+        <PersonAddIcon />
+        <Typography sx={{ ml: 2 }}>Add Me</Typography>
+      </FloatButton>
     </Box>
   );
 }
