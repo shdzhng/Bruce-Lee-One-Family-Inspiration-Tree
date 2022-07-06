@@ -2,7 +2,7 @@ export const nodeData = [
   {
     id: 'Pablo Picasso',
     type: 'Artist',
-    color: 'Aquamarine',
+    color: '#534400',
     group: 1,
     zh: '巴勃羅畢加索',
     es: 'Pablo Picasso',
@@ -14,7 +14,7 @@ export const nodeData = [
   {
     id: 'Johann Sebastian Bach',
     type: 'Artist',
-    color: 'Aquamarine',
+    color: '#534400',
     group: 1,
     zh: '約翰·塞巴斯蒂安·巴赫',
     es: 'Johann Sebastian Bach',
@@ -26,7 +26,7 @@ export const nodeData = [
   {
     id: 'Richard Strauss',
     type: 'Artist',
-    color: 'Aquamarine',
+    color: '#534400',
     group: 1,
     zh: '理查·施特勞斯',
     es: 'Richard Strauss',
@@ -38,7 +38,7 @@ export const nodeData = [
   {
     id: 'Gucci Mane',
     type: 'Artist',
-    color: 'Aquamarine',
+    color: '#534400',
     group: 1,
     zh: '古馳鬃毛',
     es: 'Gucci Mane',
@@ -50,7 +50,7 @@ export const nodeData = [
   {
     id: 'William Durant',
     type: 'Business',
-    color: 'green',
+    color: '#534400',
     group: 1,
     zh: '威廉杜蘭特',
     es: 'William Durant',
@@ -62,7 +62,7 @@ export const nodeData = [
   {
     id: 'Henry Ford',
     type: 'Business',
-    color: 'green',
+    color: '#534400',
     group: 1,
     zh: '亨利·福特',
     es: 'Henry Ford',
@@ -74,7 +74,7 @@ export const nodeData = [
   {
     id: 'William Clement Stone',
     type: 'Business',
-    color: 'green',
+    color: '#534400',
     group: 1,
     zh: '威廉克萊門特斯通',
     es: 'William Clement Stone',
@@ -86,7 +86,7 @@ export const nodeData = [
   {
     id: 'Andrew Carnegie',
     type: 'Business',
-    color: 'green',
+    color: '#534400',
     group: 1,
     zh: '安德魯·卡內基',
     es: 'Andrew Carnegie',
@@ -98,7 +98,7 @@ export const nodeData = [
   {
     id: 'Jiddu Krishnamurti',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '吉都克里希那穆提',
     es: 'Jiddu Krishnamurti',
@@ -110,7 +110,7 @@ export const nodeData = [
   {
     id: 'Arthur Schopenhauer',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '阿瑟·叔本華',
     es: 'Arthur Schopenhauer',
@@ -122,7 +122,7 @@ export const nodeData = [
   {
     id: 'Bertrand Russell',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '伯特蘭·羅素',
     es: 'Bertrand Russell',
@@ -134,7 +134,7 @@ export const nodeData = [
   {
     id: 'Michael Foucult',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '邁克爾·福柯',
     es: 'Michael Foucult',
@@ -146,7 +146,7 @@ export const nodeData = [
   {
     id: 'Immanuel Kant',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '伊曼紐爾康德',
     es: 'Immanuel Kant',
@@ -158,7 +158,7 @@ export const nodeData = [
   {
     id: 'Thomas Paine',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '托馬斯·潘恩',
     es: 'Thomas Paine',
@@ -170,7 +170,7 @@ export const nodeData = [
   {
     id: 'Baron de Montesquieu',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '孟德斯鳩男爵',
     es: 'Baron de Montesquieu',
@@ -182,7 +182,7 @@ export const nodeData = [
   {
     id: 'George Berkeley',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '喬治伯克利',
     es: 'George Berkeley',
@@ -194,7 +194,7 @@ export const nodeData = [
   {
     id: 'David Hume',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '大衛休謨',
     es: 'David Hume',
@@ -206,7 +206,7 @@ export const nodeData = [
   {
     id: 'Adam Smith',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '亞當·斯密',
     es: 'Adam Smith',
@@ -218,7 +218,7 @@ export const nodeData = [
   {
     id: 'Thomas Reid',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '托馬斯·里德',
     es: 'Thomas Reid',
@@ -230,7 +230,7 @@ export const nodeData = [
   {
     id: 'John Locke',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '約翰洛克',
     es: 'John Locke',
@@ -242,7 +242,7 @@ export const nodeData = [
   {
     id: 'Voltaire',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '伏爾泰',
     es: 'Voltaire',
@@ -254,7 +254,7 @@ export const nodeData = [
   {
     id: 'Jean-Jacques Rousseau',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '讓-雅克·盧梭',
     es: 'Jean-Jacques Rousseau',
@@ -266,7 +266,7 @@ export const nodeData = [
   {
     id: 'Rene Descartes',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '笛卡爾',
     es: 'Rene Descartes',
@@ -278,7 +278,7 @@ export const nodeData = [
   {
     id: 'Baruch Spinoza',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '巴魯克·斯賓諾莎',
     es: 'Baruch Spinoza',
@@ -290,7 +290,7 @@ export const nodeData = [
   {
     id: 'Auguste Comte',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '奧古斯特孔德',
     es: 'Auguste Comte',
@@ -302,7 +302,7 @@ export const nodeData = [
   {
     id: 'Karl Marx',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '卡爾·馬克思',
     es: 'Karl Marx',
@@ -314,7 +314,7 @@ export const nodeData = [
   {
     id: 'Sextus Empiricus',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '經驗主義',
     es: 'Sextus Empiricus',
@@ -326,7 +326,7 @@ export const nodeData = [
   {
     id: 'Aristotle',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '亞里士多德',
     es: 'Aristotle',
@@ -338,7 +338,7 @@ export const nodeData = [
   {
     id: 'Plato',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '柏拉圖',
     es: 'Plato',
@@ -350,7 +350,7 @@ export const nodeData = [
   {
     id: 'Socrates',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '蘇格拉底',
     es: 'Socrates',
@@ -362,7 +362,7 @@ export const nodeData = [
   {
     id: 'Chuang Tzu',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '莊子',
     es: 'Chuang Tzu',
@@ -374,7 +374,7 @@ export const nodeData = [
   {
     id: 'Mencius',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '孟子',
     es: 'Mencius',
@@ -386,7 +386,7 @@ export const nodeData = [
   {
     id: 'Confucious',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '孔子',
     es: 'Confucious',
@@ -398,7 +398,7 @@ export const nodeData = [
   {
     id: 'Laozi',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '老子',
     es: 'Laozi',
@@ -410,7 +410,7 @@ export const nodeData = [
   {
     id: 'Friedrich Wilhelm Nietzsche',
     type: 'Philosopher',
-    color: 'CadetBlue',
+    color: '#534400',
     group: 1,
     zh: '弗里德里希·威廉·尼采',
     es: 'Friedrich Wilhelm Nietzsche',
@@ -422,7 +422,7 @@ export const nodeData = [
   {
     id: 'Carl Jung',
     type: 'Psychologist',
-    color: 'DarkCyan',
+    color: '#534400',
     group: 1,
     zh: '卡爾·榮格',
     es: 'Carl Jung',
@@ -434,7 +434,7 @@ export const nodeData = [
   {
     id: 'Sigmund Freud',
     type: 'Psychologist',
-    color: 'DarkCyan',
+    color: '#534400',
     group: 1,
     zh: '西格蒙德·弗洛伊德',
     es: 'Sigmund Freud',
@@ -446,7 +446,7 @@ export const nodeData = [
   {
     id: 'Carl Rogers',
     type: 'Psychologist',
-    color: 'DarkCyan',
+    color: '#534400',
     group: 1,
     zh: '卡爾·羅傑斯',
     es: 'Carl Rogers',
@@ -458,7 +458,7 @@ export const nodeData = [
   {
     id: 'Nicolas Malebranche',
     type: 'Religion',
-    color: 'Beige',
+    color: '#534400',
     group: 1,
     zh: '尼古拉斯·馬勒布蘭奇',
     es: 'Nicolas Malebranche',
@@ -470,7 +470,7 @@ export const nodeData = [
   {
     id: 'Thomas Aquinas',
     type: 'Religion',
-    color: 'Beige',
+    color: '#534400',
     group: 1,
     zh: '托馬斯·阿奎那',
     es: 'Thomas Aquinas',
@@ -482,7 +482,7 @@ export const nodeData = [
   {
     id: 'Dalai Lama',
     type: 'Religion',
-    color: 'Beige',
+    color: '#534400',
     group: 1,
     zh: '達賴喇嘛',
     es: 'Dalai Lama',
@@ -494,7 +494,7 @@ export const nodeData = [
   {
     id: 'Thomas Merton',
     type: 'Religion',
-    color: 'Beige',
+    color: '#534400',
     group: 1,
     zh: '托馬斯·默頓',
     es: 'Thomas Merton',
@@ -506,7 +506,7 @@ export const nodeData = [
   {
     id: 'Albert Einstein',
     type: 'Scientist',
-    color: 'ForestGreen',
+    color: '#534400',
     group: 1,
     zh: '艾爾伯特愛因斯坦',
     es: 'Albert Einstein',
@@ -518,7 +518,7 @@ export const nodeData = [
   {
     id: 'Charles Darwin',
     type: 'Scientist',
-    color: 'ForestGreen',
+    color: '#534400',
     group: 1,
     zh: '查爾斯·達爾文',
     es: 'Charles Darwin',
@@ -530,7 +530,7 @@ export const nodeData = [
   {
     id: 'Issac Newton',
     type: 'Scientist',
-    color: 'ForestGreen',
+    color: '#534400',
     group: 1,
     zh: '艾薩克·牛頓',
     es: 'Issac Newton',
@@ -542,7 +542,7 @@ export const nodeData = [
   {
     id: 'Galileo Galilei',
     type: 'Scientist',
-    color: 'ForestGreen',
+    color: '#534400',
     group: 1,
     zh: '伽利略·伽利雷',
     es: 'Galileo Galilei',
@@ -554,7 +554,7 @@ export const nodeData = [
   {
     id: 'Nicolaus Copernicus',
     type: 'Scientist',
-    color: 'ForestGreen',
+    color: '#534400',
     group: 1,
     zh: '尼古拉·哥白尼',
     es: 'Nicolaus Copernicus',
@@ -566,7 +566,7 @@ export const nodeData = [
   {
     id: 'Ibn Sina',
     type: 'Scientist',
-    color: 'ForestGreen',
+    color: '#534400',
     group: 1,
     zh: '伊本·西納',
     es: 'Ibn Sina',
@@ -578,7 +578,7 @@ export const nodeData = [
   {
     id: 'Ibn Tufail',
     type: 'Scientist',
-    color: 'ForestGreen',
+    color: '#534400',
     group: 1,
     zh: '伊本·圖費爾',
     es: 'Ibn Tufail',
@@ -590,7 +590,7 @@ export const nodeData = [
   {
     id: 'Thomas Edison',
     type: 'Scientist',
-    color: 'ForestGreen',
+    color: '#534400',
     group: 1,
     zh: '托馬斯·愛迪生',
     es: 'Thomas Edison',
@@ -602,7 +602,7 @@ export const nodeData = [
   {
     id: 'Benjamin Franklin',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '本傑明·富蘭克林',
     es: 'Benjamin Franklin',
@@ -614,7 +614,7 @@ export const nodeData = [
   {
     id: 'Theodore Roosevelt',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '西奧多·羅斯福',
     es: 'Theodore Roosevelt',
@@ -626,7 +626,7 @@ export const nodeData = [
   {
     id: 'John F. Kennedy',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '約翰·肯尼迪',
     es: 'John F. Kennedy',
@@ -638,7 +638,7 @@ export const nodeData = [
   {
     id: 'Sun Yat Sen',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '孫中山',
     es: 'Sun Yat Sen',
@@ -650,7 +650,7 @@ export const nodeData = [
   {
     id: 'Qin Shi Huang',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '秦始皇',
     es: 'Qin Shi Huang',
@@ -662,7 +662,7 @@ export const nodeData = [
   {
     id: 'Takeda Shingen',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '武田信玄',
     es: 'Takeda Shingen',
@@ -674,7 +674,7 @@ export const nodeData = [
   {
     id: 'Sun Tzu',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '孫子',
     es: 'Sun Tzu',
@@ -686,7 +686,7 @@ export const nodeData = [
   {
     id: 'Ho Chi Minh',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '胡志明',
     es: 'Ho Chi Minh',
@@ -698,7 +698,7 @@ export const nodeData = [
   {
     id: 'Abraham Lincoln',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '亞伯拉罕·林肯',
     es: 'Abraham Lincoln',
@@ -710,7 +710,7 @@ export const nodeData = [
   {
     id: 'Donald Trump',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '唐納德·特朗普',
     es: 'Donald Trump',
@@ -722,7 +722,7 @@ export const nodeData = [
   {
     id: 'Richard Nixon',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '理查德尼克松',
     es: 'Richard Nixon',
@@ -734,7 +734,7 @@ export const nodeData = [
   {
     id: 'Mao Ze Dong',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '毛澤東',
     es: 'Mao Ze Dong',
@@ -746,7 +746,7 @@ export const nodeData = [
   {
     id: 'Gerald Ford',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '杰拉爾德福特',
     es: 'Gerald Ford',
@@ -758,7 +758,7 @@ export const nodeData = [
   {
     id: 'Jimmy Carter',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '吉米卡特',
     es: 'Jimmy Carter',
@@ -770,7 +770,7 @@ export const nodeData = [
   {
     id: 'Ronald Reagan',
     type: 'Statesman',
-    color: 'LightCyan',
+    color: '#534400',
     group: 1,
     zh: '羅納德·裡根',
     es: 'Ronald Reagan',
@@ -782,7 +782,7 @@ export const nodeData = [
   {
     id: 'Miyamoto Musashi',
     type: 'Warrior',
-    color: 'DarkOliveGreen',
+    color: '#534400',
     group: 1,
     zh: '宮本武藏',
     es: 'Miyamoto Musashi',
@@ -794,7 +794,7 @@ export const nodeData = [
   {
     id: 'Alan Watts',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '艾倫·瓦茨',
     es: 'Alan Watts',
@@ -806,7 +806,7 @@ export const nodeData = [
   {
     id: 'Joseph Campbell',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '約瑟夫·坎貝爾',
     es: 'Joseph Campbell',
@@ -818,7 +818,7 @@ export const nodeData = [
   {
     id: 'William Shakespeare',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '威廉·莎士比亞',
     es: 'William Shakespeare',
@@ -830,7 +830,7 @@ export const nodeData = [
   {
     id: 'George Elliot',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '喬治·艾略特',
     es: 'George Elliot',
@@ -842,7 +842,7 @@ export const nodeData = [
   {
     id: 'Johann Wolfgang von Goethe',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '約翰·沃爾夫岡·馮·歌德',
     es: 'Johann Wolfgang von Goethe',
@@ -854,7 +854,7 @@ export const nodeData = [
   {
     id: 'Baltasar Gracian',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '巴爾塔薩·格拉西安',
     es: 'Baltasar Gracian',
@@ -866,7 +866,7 @@ export const nodeData = [
   {
     id: 'Homer',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '荷馬',
     es: 'Homer',
@@ -878,7 +878,7 @@ export const nodeData = [
   {
     id: 'Nitobe Inazo',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '新戶部稻三',
     es: 'Nitobe Inazo',
@@ -890,7 +890,7 @@ export const nodeData = [
   {
     id: 'Herman Hess',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '赫爾曼·赫斯',
     es: 'Herman Hess',
@@ -902,7 +902,7 @@ export const nodeData = [
   {
     id: 'Frank Bettger',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '弗蘭克·貝特格',
     es: 'Frank Bettger',
@@ -914,7 +914,7 @@ export const nodeData = [
   {
     id: 'Dale Carnegie',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '戴爾卡耐基',
     es: 'Dale Carnegie',
@@ -926,7 +926,7 @@ export const nodeData = [
   {
     id: 'Norman Vincent Peale',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '諾曼文森特皮爾',
     es: 'Norman Vincent Peale',
@@ -938,7 +938,7 @@ export const nodeData = [
   {
     id: 'James Allen (author)',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '詹姆斯·艾倫',
     es: 'James Allen',
@@ -950,7 +950,7 @@ export const nodeData = [
   {
     id: 'Napolean Hill',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '拿破崙山',
     es: 'Napolean Hill',
@@ -962,7 +962,7 @@ export const nodeData = [
   {
     id: 'Ernest Hemingway',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '海明威',
     es: 'Ernest Hemingway',
@@ -974,7 +974,7 @@ export const nodeData = [
   {
     id: 'Mark Twain',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '馬克吐溫',
     es: 'Mark Twain',
@@ -986,7 +986,7 @@ export const nodeData = [
   {
     id: 'Henry James',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '亨利詹姆斯',
     es: 'Henry James',
@@ -998,7 +998,7 @@ export const nodeData = [
   {
     id: 'Stephen Crane',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '斯蒂芬·克蘭',
     es: 'Stephen Crane',
@@ -1010,7 +1010,7 @@ export const nodeData = [
   {
     id: 'Clive Staples Lewis',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '克萊夫·斯台普斯·劉易斯',
     es: 'Clive Staples Lewis',
@@ -1022,7 +1022,7 @@ export const nodeData = [
   {
     id: 'Joanne Rowling',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '喬安妮·羅琳',
     es: 'Joanne Rowling',
@@ -1034,7 +1034,7 @@ export const nodeData = [
   {
     id: 'John Ronald Reuel Tolkien',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '約翰·羅納德·魯爾·托爾金',
     es: 'John Ronald Reuel Tolkien',
@@ -1046,7 +1046,7 @@ export const nodeData = [
   {
     id: 'William Strunk Jr',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '小威廉·斯特倫克',
     es: 'William Strunk Jr',
@@ -1058,7 +1058,7 @@ export const nodeData = [
   {
     id: 'Dorothy Parker',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '多蘿西·帕克',
     es: 'Dorothy Parker',
@@ -1070,7 +1070,7 @@ export const nodeData = [
   {
     id: 'Stephen King',
     type: 'Writer',
-    color: 'LightSeaGreen',
+    color: '#534400',
     group: 1,
     zh: '斯蒂芬·金',
     es: 'Stephen King',

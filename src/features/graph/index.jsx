@@ -90,6 +90,7 @@ export function Graph() {
   };
 
   const handleSubmit = () => {
+    // setGraphData(); //add user data to graph data
     console.log(visitorData);
     setAddModal(false);
   };
@@ -457,7 +458,7 @@ export function Graph() {
           const label = node[language];
           const color = node.color;
           const fontSize =
-            label === 'Bruce Lee' ? 12 / globalScale : 11 / globalScale;
+            label === 'Bruce Lee' ? 16 / globalScale : 12 / globalScale;
           ctx.font = `${fontSize}px Sans-Serif`;
           const textWidth = ctx.measureText(label).width;
           const bckgDimensions = [textWidth, fontSize].map(
@@ -470,7 +471,7 @@ export function Graph() {
           ctx.arc(
             node.x,
             node.y,
-            node.id === 'Bruce Lee' ? 15 : 5,
+            node.id === 'Bruce Lee' ? 20 : 7,
             0,
             2 * Math.PI,
             false
