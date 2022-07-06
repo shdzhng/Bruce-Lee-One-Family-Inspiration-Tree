@@ -49,7 +49,7 @@ const InputContainer = styled(Box)(() => ({
   alignItems: 'center',
 
   ['@media (max-width:800px)']: {
-    bgcolor: 'red',
+    bgcolor: '#ffeea2',
   },
 }));
 
@@ -159,24 +159,6 @@ const Summary = styled(Typography)(() => ({
   },
 }));
 
-const fadeOut = keyframes`
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-`;
-
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
 const StyledModal = styled(Modal)((props) => ({
   overlay: {
     backgroundColor: '#ffffff',
@@ -192,7 +174,6 @@ export {
   Summary,
   StyledModal,
   SubmitButton,
-  fadeIn,
   GridModalContainer,
   FloatButton,
   InputField,
