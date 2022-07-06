@@ -63,11 +63,11 @@ const SubscriptionCheckBox = styled(Checkbox)(() => ({
 
 const FloatButton = styled(Fab)(() => ({
   margin: 0,
-  top: 'auto',
-  right: 20,
-  bottom: 20,
-  left: 'auto',
-  position: 'fixed',
+  // top: 'auto',
+  // right: 20,
+  // bottom: 20,
+  // left: 'auto',
+  // position: 'fixed',
   backgroundColor: '#FED206',
 }));
 

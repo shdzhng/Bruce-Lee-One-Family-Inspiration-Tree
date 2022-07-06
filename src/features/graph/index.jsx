@@ -8,6 +8,8 @@ import React, {
 import axios from 'axios';
 import { ForceGraph2D } from 'react-force-graph';
 import { nodeData, linkData } from '../../constants/data';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+import PeopleIcon from '@mui/icons-material/People';
 import { US, TW, ES, IT, DE, FR } from 'country-flag-icons/react/3x2';
 import {
   Box,
@@ -59,13 +61,15 @@ const defaultDataStructure = {
   subscription: true,
 };
 
+const defaultGraphData = {
+  nodes: nodeData,
+  links: linkData,
+};
+
 export function Graph() {
   const [width, height] = useWindowSize();
   const fgRef = useRef();
-  const [graphData, setGraphData] = useState({
-    nodes: nodeData,
-    links: linkData,
-  });
+  const [graphData, setGraphData] = useState(defaultGraphData);
   const [description, setDescription] = useState(null);
   const [allVisitorData, setAllVisitorData] = useState([]);
   const [newVisitorData, setNewVisitorData] = useState(defaultDataStructure);
@@ -76,6 +80,7 @@ export function Graph() {
   const [openLandingModal, setOpenLandingModal] = React.useState(false);
   const [openAddModal, setAddModal] = React.useState(false);
   const [bionicMode, setBionicMode] = React.useState(false);
+  const [visitorMode, setVistorMode] = useState(false);
   const [language, setLanguage] = useState('en');
 
   //// firebase////
@@ -83,51 +88,61 @@ export function Graph() {
   const db = getFirestore(app);
   const colRef = collection(db, 'visitorData');
 
-  const fetchVisitorData = useCallback(() => {
-    console.log('fetching visitor data');
-    getDocs(colRef).then((snapshot) => {
-      const data = [];
-      snapshot.docs.forEach((doc) => {
-        data.push({ ...doc.data() });
-      });
-      setAllVisitorData(data);
-      console.log('done fetching');
-    });
-  }, []);
-
-  ///////
-
   useEffect(() => {
-    const initiatizeData = async () => {
-      await fetchVisitorData();
-      await updateData();
-    };
-    initiatizeData();
+    fetchVisitorData();
     setTimeout(() => {
       setOpenLandingModal(true);
     }, 300);
   }, []);
 
   useEffect(() => {
-    console.log(graphData.nodes);
+    if (visitorMode) {
+      fetchVisitorData();
+      updateData();
+    } else {
+      setGraphData(defaultGraphData);
+    }
+  }, [visitorMode]);
+
+  const fetchVisitorData = () => {
+    getDocs(colRef).then((snapshot) => {
+      const data = [];
+      snapshot.docs.forEach((doc) => {
+        data.push({ ...doc.data() });
+      });
+      setAllVisitorData(data);
+    });
+  };
+
+  useEffect(() => {
+    console.log('all visitor data: ' + allVisitorData.length);
+  }, [allVisitorData]);
+
+  useEffect(() => {
+    console.log('graph data: ' + graphData.nodes.length);
   }, [graphData]);
 
   const updateData = () => {
-    console.log('updating data');
-    const newNodeData = [...graphData.nodes, ...allVisitorData];
-    const newLinkData = [...graphData.links];
-    const sourceNode = graphData.nodes.find((node) => node.id === 'Bruce Lee');
+    if (visitorMode === true) {
+      const newNodeData = [...graphData.nodes, ...allVisitorData];
+      const newLinkData = [...graphData.links];
+      const sourceNode = graphData.nodes.find(
+        (node) => node.id === 'Bruce Lee'
+      );
 
-    allVisitorData.map((visitor) => {
-      newLinkData.push({ source: sourceNode, target: visitor.en, value: 1 });
-    });
+      allVisitorData.map((visitor) => {
+        newLinkData.push({
+          source: sourceNode,
+          target: visitor.en,
+          value: 1,
+        });
+      });
 
-    setGraphData({
-      nodes: newNodeData,
-      links: newLinkData,
-    });
-
-    console.log('done updating data');
+      setGraphData({
+        nodes: newNodeData,
+        links: newLinkData,
+      });
+    }
   };
 
   const handleClose = () => {
@@ -245,8 +260,6 @@ export function Graph() {
     await fetchWikiData(e.id, language);
     setOpenDescriptionModal(true);
   };
-
-  console.log('render');
 
   return (
     <Box>
@@ -585,15 +598,41 @@ export function Graph() {
         }}
       />
 
-      <FloatButton
-        variant="extended"
-        onClick={() => {
-          handleAddVisitor();
+      <Box
+        sx={{
+          right: 20,
+          bottom: 20,
+          left: 'auto',
+          position: 'fixed',
+          top: 'auto',
+          display: 'flex',
         }}
       >
-        <PersonAddIcon />
-        <Typography sx={{ ml: 2 }}>Add Me</Typography>
-      </FloatButton>
+        <FloatButton
+          variant="extended"
+          onClick={() => {
+            handleAddVisitor();
+          }}
+        >
+          <PersonAddIcon />
+          <Typography sx={{ ml: 2 }}>Inspired?</Typography>
+        </FloatButton>
+
+        <FloatButton
+          variant="circular"
+          size="medium"
+          sx={{
+            ml: 2,
+            mr: 2,
+          }}
+          onClick={() => {
+            setVistorMode(!visitorMode);
+            updateData();
+          }}
+        >
+          {visitorMode ? <PeopleOutlineIcon /> : <PeopleIcon />}
+        </FloatButton>
+      </Box>
     </Box>
   );
 }
