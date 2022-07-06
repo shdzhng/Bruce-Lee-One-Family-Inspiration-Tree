@@ -159,12 +159,13 @@ export function Graph() {
     };
 
     addDoc(colRef, data).then(() => {
-      setAllVisitorData([...allVisitorData, { data }]);
       setNewVisitorData(defaultDataStructure);
       setAddModal(false);
     });
+
+    setAllVisitorData([...allVisitorData, data]);
+    updateData();
     setVisitorMode(true);
-    // updateData();
   };
 
   const handleClose = () => {
