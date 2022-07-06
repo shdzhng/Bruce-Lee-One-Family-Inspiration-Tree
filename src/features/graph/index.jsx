@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import { ForceGraph2D } from 'react-force-graph';
-import { nodeData, linkData } from '../data';
+import { nodeData, linkData } from '../../constants/data';
 import { US, TW, ES, IT, DE, FR } from 'country-flag-icons/react/3x2';
 import {
   Box,
@@ -47,6 +47,18 @@ import message from '../../constants/message';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { FloatButton } from '../../constants/styles';
 
+//firebase
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
+import config from '../../firebase/firebase.config';
+
+const defaultDataStructure = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  subscription: true,
+};
+
 export function Graph() {
   const [width, height] = useWindowSize();
   const fgRef = useRef();
@@ -55,12 +67,8 @@ export function Graph() {
     links: linkData,
   });
   const [description, setDescription] = useState(null);
-  const [visitorData, setVisitorData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    subscription: true,
-  });
+  const [allVisitorData, setAllVisitorData] = useState([]);
+  const [newVisitorData, setNewVisitorData] = useState(defaultDataStructure);
   const [thumbnail, setThumbnail] = useState(null);
   const [name, setName] = useState(null);
   const [summary, setSummary] = useState(null);
@@ -70,11 +78,57 @@ export function Graph() {
   const [bionicMode, setBionicMode] = React.useState(false);
   const [language, setLanguage] = useState('en');
 
+  //// firebase////
+  const app = initializeApp(config);
+  const db = getFirestore(app);
+  const colRef = collection(db, 'visitorData');
+
+  const fetchVisitorData = useCallback(() => {
+    console.log('fetching visitor data');
+    getDocs(colRef).then((snapshot) => {
+      const data = [];
+      snapshot.docs.forEach((doc) => {
+        data.push({ ...doc.data() });
+      });
+      setAllVisitorData(data);
+      console.log('done fetching');
+    });
+  }, []);
+
+  ///////
+
   useEffect(() => {
+    const initiatizeData = async () => {
+      await fetchVisitorData();
+      await updateData();
+    };
+    initiatizeData();
     setTimeout(() => {
       setOpenLandingModal(true);
     }, 300);
   }, []);
+
+  useEffect(() => {
+    console.log(graphData.nodes);
+  }, [graphData]);
+
+  const updateData = () => {
+    console.log('updating data');
+    const newNodeData = [...graphData.nodes, ...allVisitorData];
+    const newLinkData = [...graphData.links];
+    const sourceNode = graphData.nodes.find((node) => node.id === 'Bruce Lee');
+
+    allVisitorData.map((visitor) => {
+      newLinkData.push({ source: sourceNode, target: visitor.en, value: 1 });
+    });
+
+    setGraphData({
+      nodes: newNodeData,
+      links: newLinkData,
+    });
+
+    console.log('done updating data');
+  };
 
   const handleClose = () => {
     setOpenDescriptionModal(false);
@@ -90,28 +144,54 @@ export function Graph() {
   };
 
   const handleSubmit = () => {
-    // setGraphData(); //add user data to graph data
-    console.log(visitorData);
-    setAddModal(false);
+    const { email, firstName, lastName, subscription } = newVisitorData;
+    const capitalizeFirstLetter = (str) =>
+      str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
+    allVisitorData.forEach((visitor) => {
+      if (email === visitor.email) {
+        alert('this email has already been used');
+        return;
+      }
+    });
+
+    const data = {
+      email,
+      id: `${`${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
+        lastName
+      )}`}`,
+      en: `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
+        lastName
+      )}`,
+      subscription,
+      type: 'Visitor',
+      color: 'green',
+    };
+
+    addDoc(colRef, data).then(() => {
+      setAllVisitorData([...allVisitorData, { data }]);
+      setNewVisitorData(defaultDataStructure);
+      setAddModal(false);
+      updateData();
+    });
   };
 
   const handleInputChange = (e) => {
     e.preventDefault();
     const { id, value } = e.target;
     if (id === 'subscription') {
-      setVisitorData({
-        ...visitorData,
-        subscription: !visitorData.subscription,
+      setNewVisitorData({
+        ...newVisitorData,
+        subscription: !newVisitorData.subscription,
       });
       return;
     }
-    setVisitorData({
-      ...visitorData,
+    setNewVisitorData({
+      ...newVisitorData,
       [id]: value,
     });
   };
 
-  const handleAdd = () => {
+  const handleAddVisitor = () => {
     setAddModal(true);
   };
 
@@ -119,7 +199,7 @@ export function Graph() {
     setLanguage(event.target.value);
   };
 
-  const fetchData = useCallback(
+  const fetchWikiData = useCallback(
     (name, language) => {
       const formattedName = name.split(' ').join('_');
 
@@ -151,17 +231,22 @@ export function Graph() {
           setThumbnail(data.thumbnail);
         })
         .catch((err) => {
-          fetchData(name, 'en');
+          fetchWikiData(name, 'en');
         });
     },
     [bionicMode]
   );
 
-  const handleClick = async (e) => {
+  const handleNodeClick = async (e) => {
+    if (e.type === 'Visitor') {
+      return;
+    }
     setName(e.id);
-    await fetchData(e.id, language);
+    await fetchWikiData(e.id, language);
     setOpenDescriptionModal(true);
   };
+
+  console.log('render');
 
   return (
     <Box>
@@ -202,6 +287,18 @@ export function Graph() {
                 }}
               >
                 INFO
+              </Button>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+                sx={{
+                  fontFamily: 'serif',
+                  fontWeight: 700,
+                  color: 'Black',
+                }}
+              >
+                See Visitors
               </Button>
 
               <FormControl>
@@ -255,7 +352,7 @@ export function Graph() {
               <InputField
                 id="firstName"
                 placeholder="First Name"
-                value={visitorData.firstName}
+                value={newVisitorData.firstName}
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
@@ -263,7 +360,7 @@ export function Graph() {
               <InputField
                 id="lastName"
                 placeholder="Last Name"
-                value={visitorData.lastName}
+                value={newVisitorData.lastName}
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
@@ -271,7 +368,7 @@ export function Graph() {
               <InputField
                 id="email"
                 placeholder="Email"
-                value={visitorData.email}
+                value={newVisitorData.email}
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
@@ -282,7 +379,7 @@ export function Graph() {
                     style={{
                       color: 'black',
                     }}
-                    checked={visitorData.subscription}
+                    checked={newVisitorData.subscription}
                     id="subscription"
                     onChange={(e) => {
                       handleInputChange(e);
@@ -446,16 +543,17 @@ export function Graph() {
           ctx.fill();
         }}
         onNodeClick={(e) => {
-          handleClick(e);
+          handleNodeClick(e);
         }}
         linkLabel={(link) => `${link.source.id} & ${link.target.id}`}
         linkColor={({ source, target }) => {
+          if (target.type === 'Visitor') return 'green';
           if (source.id === 'Bruce Lee' || target.id === 'Bruce Lee')
             return '#FED206';
           return 'gray';
         }}
         nodeCanvasObject={(node, ctx, globalScale) => {
-          const label = node[language];
+          const label = node[language] || node.en;
           const color = node.color;
           const fontSize =
             label === 'Bruce Lee' ? 16 / globalScale : 12 / globalScale;
@@ -485,12 +583,12 @@ export function Graph() {
 
           node.__bckgDimensions = bckgDimensions;
         }}
-      ></ForceGraph2D>
+      />
 
       <FloatButton
         variant="extended"
         onClick={() => {
-          handleAdd();
+          handleAddVisitor();
         }}
       >
         <PersonAddIcon />
