@@ -24,6 +24,18 @@ export const nodeData = [
     en: 'Johann Sebastian Bach',
   },
   {
+    id: 'CHSA',
+    type: 'Organization',
+    color: 'red',
+    group: 1,
+    zh: '美國中國歷史學會',
+    es: 'Sociedad Histórica China de América',
+    it: "Società storica cinese d'America",
+    fr: "Société historique chinoise d'Amérique",
+    de: 'Chinesische Historische Gesellschaft von Amerika',
+    en: 'Chinese Historical Society of America',
+  },
+  {
     id: 'Richard Strauss',
     type: 'Artist',
     color: '#534400',
@@ -1097,6 +1109,11 @@ export const linkData = [
   {
     source: 'Henry James',
     target: 'Ernest Hemingway',
+    value: 1,
+  },
+  {
+    source: 'Bruce Lee',
+    target: 'CHSA',
     value: 1,
   },
   {

@@ -80,7 +80,7 @@ export function Graph() {
   const [openLandingModal, setOpenLandingModal] = React.useState(false);
   const [openAddModal, setAddModal] = React.useState(false);
   const [bionicMode, setBionicMode] = React.useState(false);
-  const [visitorMode, setVistorMode] = useState(false);
+  const [visitorMode, setVisitorMode] = useState(false);
   const [language, setLanguage] = useState('en');
 
   //// firebase////
@@ -96,8 +96,8 @@ export function Graph() {
   }, []);
 
   useEffect(() => {
+    fetchVisitorData();
     if (visitorMode) {
-      fetchVisitorData();
       updateData();
     } else {
       setGraphData(defaultGraphData);
@@ -114,21 +114,11 @@ export function Graph() {
     });
   };
 
-  useEffect(() => {
-    console.log('all visitor data: ' + allVisitorData.length);
-  }, [allVisitorData]);
-
-  useEffect(() => {
-    console.log('graph data: ' + graphData.nodes.length);
-  }, [graphData]);
-
   const updateData = () => {
     if (visitorMode === true) {
       const newNodeData = [...graphData.nodes, ...allVisitorData];
       const newLinkData = [...graphData.links];
-      const sourceNode = graphData.nodes.find(
-        (node) => node.id === 'Bruce Lee'
-      );
+      const sourceNode = graphData.nodes.find((node) => node.id === 'CHSA');
 
       allVisitorData.map((visitor) => {
         newLinkData.push({
@@ -137,25 +127,11 @@ export function Graph() {
           value: 1,
         });
       });
-
       setGraphData({
         nodes: newNodeData,
         links: newLinkData,
       });
     }
-  };
-
-  const handleClose = () => {
-    setOpenDescriptionModal(false);
-    setOpenLandingModal(false);
-    setAddModal(false);
-
-    setTimeout(() => {
-      setDescription(null);
-      setName(null);
-      setThumbnail(null);
-      setSummary(null);
-    }, 500);
   };
 
   const handleSubmit = () => {
@@ -186,8 +162,22 @@ export function Graph() {
       setAllVisitorData([...allVisitorData, { data }]);
       setNewVisitorData(defaultDataStructure);
       setAddModal(false);
-      updateData();
     });
+    setVisitorMode(true);
+    // updateData();
+  };
+
+  const handleClose = () => {
+    setOpenDescriptionModal(false);
+    setOpenLandingModal(false);
+    setAddModal(false);
+
+    setTimeout(() => {
+      setDescription(null);
+      setName(null);
+      setThumbnail(null);
+      setSummary(null);
+    }, 500);
   };
 
   const handleInputChange = (e) => {
@@ -204,14 +194,6 @@ export function Graph() {
       ...newVisitorData,
       [id]: value,
     });
-  };
-
-  const handleAddVisitor = () => {
-    setAddModal(true);
-  };
-
-  const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
   };
 
   const fetchWikiData = useCallback(
@@ -301,18 +283,6 @@ export function Graph() {
               >
                 INFO
               </Button>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                }}
-                sx={{
-                  fontFamily: 'serif',
-                  fontWeight: 700,
-                  color: 'Black',
-                }}
-              >
-                See Visitors
-              </Button>
 
               <FormControl>
                 <Select
@@ -321,7 +291,9 @@ export function Graph() {
                   id="language-select"
                   value={language}
                   label="Language"
-                  onChange={handleLanguageChange}
+                  onChange={(e) => {
+                    setLanguage(e.target.value);
+                  }}
                   disableUnderline
                 >
                   <MenuItem value={'en'}>
@@ -611,7 +583,7 @@ export function Graph() {
         <FloatButton
           variant="extended"
           onClick={() => {
-            handleAddVisitor();
+            setAddModal(true);
           }}
         >
           <PersonAddIcon />
@@ -626,7 +598,7 @@ export function Graph() {
             mr: 2,
           }}
           onClick={() => {
-            setVistorMode(!visitorMode);
+            setVisitorMode(!visitorMode);
             updateData();
           }}
         >
