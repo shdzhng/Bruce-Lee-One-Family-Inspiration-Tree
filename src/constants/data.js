@@ -316,16 +316,16 @@ export const linkData = [
     target: 'Ernest Hemingway',
   },
   {
-    source: 'Bruce Lee',
-    target: 'Stephen Crane',
+    source: 'Stephen Crane',
+    target: 'Bruce Lee',
   },
   {
     source: 'William Strunk Jr',
     target: 'William Shakespeare',
   },
   {
-    source: 'Bruce Lee',
-    target: 'William Strunk Jr',
+    source: 'William Strunk Jr',
+    target: 'Bruce Lee',
   },
   {
     source: 'Dorothy Parker',
@@ -380,36 +380,36 @@ export const linkData = [
     target: 'Clive Staples Lewis',
   },
   {
-    source: 'Bruce Lee',
-    target: 'Thomas Merton',
+    source: 'Thomas Merton',
+    target: 'Bruce Lee',
   },
   {
     source: 'Thomas Merton',
     target: 'Dalai Lama',
   },
   {
-    source: 'Bruce Lee',
-    target: 'Miyamoto Musashi',
+    source: 'Miyamoto Musashi',
+    target: 'Bruce Lee',
   },
   {
-    source: 'Bruce Lee',
-    target: 'Jiddu Krishnamurti',
+    source: 'Jiddu Krishnamurti',
+    target: 'Bruce Lee',
   },
   {
     source: 'Jiddu Krishnamurti',
     target: 'Theodore Roosevelt',
   },
   {
-    source: 'Bruce Lee',
-    target: 'Chuang Tzu',
+    source: 'Chuang Tzu',
+    target: 'Bruce Lee',
   },
   {
     source: 'Laozi',
     target: 'Chuang Tzu',
   },
   {
-    source: 'Bruce Lee',
-    target: 'Herman Hess',
+    source: 'Herman Hess',
+    target: 'Bruce Lee',
   },
   {
     source: 'Herman Hess',
@@ -568,12 +568,12 @@ export const linkData = [
     target: 'Bruce Lee',
   },
   {
-    source: 'Bruce Lee',
-    target: 'Joseph Campbell',
+    source: 'Joseph Campbell',
+    target: 'Bruce Lee',
   },
   {
-    source: 'Bruce Lee',
-    target: 'Plato',
+    source: 'Plato',
+    target: 'Bruce Lee',
   },
   {
     source: 'Carl Rogers',
@@ -584,8 +584,8 @@ export const linkData = [
     target: 'Carl Jung',
   },
   {
-    source: 'Bruce Lee',
-    target: 'Carl Jung',
+    source: 'Carl Jung',
+    target: 'Bruce Lee',
   },
   {
     source: 'Alan Watts',
@@ -596,8 +596,8 @@ export const linkData = [
     target: 'Joseph Campbell',
   },
   {
-    source: 'Bruce Lee',
-    target: 'Thomas Aquinas',
+    source: 'Thomas Aquinas',
+    target: 'Bruce Lee',
   },
   {
     source: 'George Berkeley',
@@ -640,8 +640,8 @@ export const linkData = [
     target: 'Sigmund Freud',
   },
   {
-    source: 'Bruce Lee',
-    target: 'David Hume',
+    source: 'David Hume',
+    target: 'Bruce Lee',
   },
   {
     source: 'Friedrich Wilhelm Nietzsche',

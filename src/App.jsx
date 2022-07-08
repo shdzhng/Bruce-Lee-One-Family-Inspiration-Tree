@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Graph } from './features/graph';
+import Graph from './features/graph';
 import { GlobalStyle } from './constants/styles';
 
 function App() {
