@@ -7,5 +7,10 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      UnrealBloomPassPromise = import(
+        '//cdn.skypack.dev/three@0.136/examples/jsm/postprocessing/UnrealBloomPass.js'
+      ).then((m) => m.UnrealBloomPass);
+    </script>
   </body>
 </html>

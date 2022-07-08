@@ -20,15 +20,18 @@
     "d3": "^4.13.0",
     "firebase": "^9.8.4",
     "force-graph": "^1.42",
+    "howler": "^2.2.3",
     "prop-types": "^15.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-force-graph": "^1.41.12",
+    "react-howler": "^5.2.0",
     "react-kapsule": "^2.2",
     "react-redux": "^8.0.2",
     "react-scripts": "5.0.1",
     "react-sizeme": "^3.0.2",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "three-spritetext": "^1.6.5"
   },
   "scripts": {
     "start": "react-scripts start",

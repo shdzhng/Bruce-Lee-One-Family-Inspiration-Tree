@@ -8,241 +8,133 @@ import React, {
 import axios from 'axios';
 import { ForceGraph2D } from 'react-force-graph';
 import { nodeData, linkData } from '../../constants/data';
-import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
-import PeopleIcon from '@mui/icons-material/People';
-import { US, TW, ES, IT, DE, FR } from 'country-flag-icons/react/3x2';
+import InfoIcon from '@mui/icons-material/Info';
+import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
+import { useWindowSize } from '@react-hook/window-size';
+import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import VolumeMuteIcon from '@mui/icons-material/VolumeMute';
+import { Howl, Howler } from 'howler';
 import {
   Box,
   Typography,
   CircularProgress,
   Backdrop,
   AppBar,
-  Zoom,
   Button,
   Toolbar,
-  List,
-  ListItem,
-  ListItemText,
   Container,
-  FormControlLabel,
-  FormControl,
-  MenuItem,
-  Select,
   Fade,
 } from '@mui/material';
-import { useWindowSize } from '@react-hook/window-size';
-import SportsMartialArtsIcon from '@mui/icons-material/SportsMartialArts';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import ReactHowler from 'react-howler';
 import {
-  welcomeModalStyle,
-  gridModalStyle,
-  InputContainer,
+  AboutPageContainer,
   StyledModal,
+  WelcomePageContainer,
   Title,
-  InputField,
-  SubscriptionCheckBox,
   Summary,
-  SubmitButton,
+  WikiPageContainer,
+  BlackButton,
+  FloatButton,
 } from '../../constants/styles';
-import message from '../../constants/message';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { FloatButton } from '../../constants/styles';
-
-//firebase
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
-import config from '../../firebase/firebase.config';
-
-const defaultDataStructure = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  subscription: true,
-};
 
 const defaultGraphData = {
   nodes: nodeData,
   links: linkData,
 };
 
-export function Graph() {
-  const [width, height] = useWindowSize();
-  const fgRef = useRef();
-  const [graphData, setGraphData] = useState(defaultGraphData);
-  const [description, setDescription] = useState(null);
-  const [allVisitorData, setAllVisitorData] = useState([]);
-  const [newVisitorData, setNewVisitorData] = useState(defaultDataStructure);
-  const [thumbnail, setThumbnail] = useState(null);
+function Graph() {
   const [name, setName] = useState(null);
-  const [summary, setSummary] = useState(null);
+  const [graphData, setGraphData] = useState(defaultGraphData);
+  const [modalData, setModalData] = useState({
+    thumbnail: null,
+    description: null,
+    summary: null,
+  });
   const [openDescriptionModal, setOpenDescriptionModal] = React.useState(false);
   const [openLandingModal, setOpenLandingModal] = React.useState(false);
-  const [openAddModal, setAddModal] = React.useState(false);
-  const [bionicMode, setBionicMode] = React.useState(false);
-  const [visitorMode, setVisitorMode] = useState(false);
-  const [language, setLanguage] = useState('en');
+  const [openAboutModal, setAboutModal] = React.useState(false);
 
-  //// firebase////
-  const app = initializeApp(config);
-  const db = getFirestore(app);
-  const colRef = collection(db, 'visitorData');
+  const [mute, setMute] = useState(true);
+  const fgRef = useRef();
+  const [width, height] = useWindowSize();
 
   useEffect(() => {
-    fetchVisitorData();
     setTimeout(() => {
       setOpenLandingModal(true);
     }, 300);
   }, []);
 
+  const toggleMute = () => {
+    setMute(!mute);
+  };
+
   useEffect(() => {
-    fetchVisitorData();
-    if (visitorMode) {
-      updateData();
-    } else {
-      setGraphData(defaultGraphData);
-    }
-  }, [visitorMode]);
-
-  const fetchVisitorData = () => {
-    getDocs(colRef).then((snapshot) => {
-      const data = [];
-      snapshot.docs.forEach((doc) => {
-        data.push({ ...doc.data() });
-      });
-      setAllVisitorData(data);
-    });
-  };
-
-  const updateData = () => {
-    if (visitorMode === true) {
-      const newNodeData = [...graphData.nodes, ...allVisitorData];
-      const newLinkData = [...graphData.links];
-      const sourceNode = graphData.nodes.find((node) => node.id === 'CHSA');
-
-      allVisitorData.map((visitor) => {
-        newLinkData.push({
-          source: sourceNode,
-          target: visitor.en,
-          value: 1,
-        });
-      });
-      setGraphData({
-        nodes: newNodeData,
-        links: newLinkData,
-      });
-    }
-  };
-
-  const handleSubmit = () => {
-    const { email, firstName, lastName, subscription } = newVisitorData;
-    const capitalizeFirstLetter = (str) =>
-      str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
-    allVisitorData.forEach((visitor) => {
-      if (email === visitor.email) {
-        alert('this email has already been used');
-        return;
-      }
-    });
-
-    const data = {
-      email,
-      id: `${`${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
-        lastName
-      )}`}`,
-      en: `${capitalizeFirstLetter(firstName)} ${capitalizeFirstLetter(
-        lastName
-      )}`,
-      subscription,
-      type: 'Visitor',
-      color: 'green',
-    };
-
-    addDoc(colRef, data).then(() => {
-      setNewVisitorData(defaultDataStructure);
-      setAddModal(false);
-    });
-
-    setAllVisitorData([...allVisitorData, data]);
-    updateData();
-    setVisitorMode(true);
-  };
+    // if (sound !== null) {
+    //   console.dir(sound);
+    //   sound.stop(sound);
+    //   sound.unload(sound);
+    //   Howler.stop(sound);
+    //   sound = null;
+    // } else {
+    //   sound = new Howl({
+    //     src: '',
+    //     html5: true,
+    //     loop: true,
+    //     volume: 0.2,
+    //   });
+    //   sound.play();
+    // }
+  }, [mute]);
 
   const handleClose = () => {
     setOpenDescriptionModal(false);
     setOpenLandingModal(false);
-    setAddModal(false);
+    setAboutModal(false);
 
     setTimeout(() => {
-      setDescription(null);
-      setName(null);
-      setThumbnail(null);
-      setSummary(null);
+      setModalData({
+        thumbnail: null,
+        description: null,
+        summary: null,
+      });
     }, 500);
   };
 
-  const handleInputChange = (e) => {
-    e.preventDefault();
-    const { id, value } = e.target;
-    if (id === 'subscription') {
-      setNewVisitorData({
-        ...newVisitorData,
-        subscription: !newVisitorData.subscription,
-      });
-      return;
-    }
-    setNewVisitorData({
-      ...newVisitorData,
-      [id]: value,
-    });
-  };
+  const data = useMemo(() => {
+    const returnedData = {};
 
-  const fetchWikiData = useCallback(
-    (name, language) => {
-      const formattedName = name.split(' ').join('_');
-
+    nodeData.map(async (node) => {
+      const unformattedName = node.id;
+      const formattedName = unformattedName.split(' ').join('_');
       axios({
         method: 'get',
-        url: `https://${language}.wikipedia.org/api/rest_v1/page/summary/${formattedName}`,
+        url: `https://en.wikipedia.org/api/rest_v1/page/summary/${formattedName}`,
       })
         .then(({ data }) => {
-          if (bionicMode === true && language === 'en') {
-            const formattedDescrip = data.extract
-              .split(' ')
-              .map((word) => {
-                const halfLength = Math.ceil(word.length / 2);
-                if (halfLength > 1) {
-                  return `<strong>${word.slice(
-                    0,
-                    halfLength
-                  )}</strong>${word.slice(halfLength, word.length)}`;
-                }
-                return word;
-              })
-              .join(' ');
-
-            setDescription({ __html: formattedDescrip });
-          } else {
-            setDescription(data.extract);
-          }
-          setSummary(data.description);
-          setThumbnail(data.thumbnail);
+          returnedData[unformattedName] = data;
         })
         .catch((err) => {
-          fetchWikiData(name, 'en');
+          console.log(err);
         });
-    },
-    [bionicMode]
-  );
+    });
 
-  const handleNodeClick = async (e) => {
-    if (e.type === 'Visitor') {
-      return;
-    }
+    return returnedData;
+  }, []);
+
+  const setCurrentData = useCallback((name) => {
+    const dataPackage = {
+      thumbnail: data[name].thumbnail.source,
+      description: data[name].extract,
+      summary: data[name].description,
+    };
+    setModalData(dataPackage);
+  }, []);
+
+  const handleNodeClick = useCallback(async (e) => {
     setName(e.id);
-    await fetchWikiData(e.id, language);
+    setCurrentData(e.id);
     setOpenDescriptionModal(true);
-  };
+  }, []);
 
   return (
     <Box>
@@ -251,26 +143,12 @@ export function Graph() {
           <Toolbar
             disableGutters
             sx={{
-              display: { xs: 'flex', md: 'flex' },
+              display: 'flex',
               mr: 1,
-              justifyContent: 'space-between',
+              justifyContent: 'flex-end',
             }}
           >
-            <SportsMartialArtsIcon style={{ fill: 'Black' }} />
-
             <Box sx={{ display: 'flex' }}>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setBionicMode((bionicMode) => !bionicMode);
-                }}
-              >
-                {language !== 'en' ? null : bionicMode ? (
-                  <VisibilityIcon style={{ fill: 'Black' }} />
-                ) : (
-                  <VisibilityOffIcon style={{ fill: 'Black' }} />
-                )}
-              </Button>
               <Button
                 onClick={(e) => {
                   e.preventDefault();
@@ -282,48 +160,28 @@ export function Graph() {
                   color: 'Black',
                 }}
               >
-                INFO
+                <InfoIcon sx={{ m: 0 }} />
               </Button>
-
-              <FormControl>
-                <Select
-                  variant="standard"
-                  labelId="language-select-label"
-                  id="language-select"
-                  value={language}
-                  label="Language"
-                  onChange={(e) => {
-                    setLanguage(e.target.value);
-                  }}
-                  disableUnderline
-                >
-                  <MenuItem value={'en'}>
-                    <US title="English" />
-                  </MenuItem>
-                  <MenuItem value={'zh'}>
-                    <TW title="繁体中文" />
-                  </MenuItem>
-                  <MenuItem value={'es'}>
-                    <ES title="Español" />
-                  </MenuItem>
-                  <MenuItem value={'it'}>
-                    <IT title="Italiano" />
-                  </MenuItem>
-                  <MenuItem value={'fr'}>
-                    <FR title="Français" />
-                  </MenuItem>
-                  <MenuItem value={'de'}>
-                    <DE title="Deutsch" />
-                  </MenuItem>
-                </Select>
-              </FormControl>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleMute();
+                }}
+                sx={{
+                  fontWeight: 700,
+                  color: 'Black',
+                }}
+              >
+                {mute ? <VolumeOffIcon /> : <VolumeMuteIcon />}
+              </Button>
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
 
+      {/* about modal */}
       <StyledModal
-        open={openAddModal}
+        open={openAboutModal}
         onClose={handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -332,60 +190,46 @@ export function Graph() {
         }}
         disableAutoFocus={true}
       >
-        <Fade in={openAddModal} timeout={300}>
-          <InputContainer>
-            <FormControl>
-              <InputField
-                id="firstName"
-                placeholder="First Name"
-                value={newVisitorData.firstName}
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-              ></InputField>
-              <InputField
-                id="lastName"
-                placeholder="Last Name"
-                value={newVisitorData.lastName}
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-              ></InputField>
-              <InputField
-                id="email"
-                placeholder="Email"
-                value={newVisitorData.email}
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-              ></InputField>
-              <FormControlLabel
-                control={
-                  <SubscriptionCheckBox
-                    style={{
-                      color: 'black',
-                    }}
-                    checked={newVisitorData.subscription}
-                    id="subscription"
-                    onChange={(e) => {
-                      handleInputChange(e);
-                    }}
-                  />
-                }
-                label="Subscribe to CHSA Newsletter"
-              />
-              <SubmitButton
-                onClick={() => {
-                  handleSubmit();
-                }}
-              >
-                Submit
-              </SubmitButton>
-            </FormControl>
-          </InputContainer>
+        <Fade in={openAboutModal} timeout={300}>
+          <AboutPageContainer>
+            <Typography sx={{ fontWeight: 900, fontSize: '2em' }}>
+              Mission
+            </Typography>
+            <Typography sx={{ my: 'inherit', fontSize: 'inherit' }}>
+              The Chinese Historical Society of America collects, preserves, and
+              illuminates the history of Chinese in America by serving as a
+              center for research, scholarship and learning to inspire a greater
+              appreciation for, and knowledge of, their collective experience
+              through exhibitions, public programs, and any other means for
+              reaching the widest audience.
+            </Typography>
+            <Typography sx={{ mt: 1, fontSize: 'inherit' }}>
+              When founded in 1963, there were fewer than 250,000 people of
+              Chinese descent living in the US and CHSA was a lone voice for the
+              study and dissemination of the history of this segment of the US
+              population. Today, as the number of Chinese in the US has risen to
+              nearly 5 million, CHSA strives to be a responsible steward of the
+              remarkable narrative of this rapidly growing and increasingly
+              visible community.
+            </Typography>
+            <BlackButton
+              target="_blank"
+              href="https://chsa.org/"
+              sx={{
+                bgcolor: 'black',
+                color: 'white',
+                fontWeight: 700,
+                mt: '2em',
+                px: '2em',
+              }}
+            >
+              Visit Website
+            </BlackButton>
+          </AboutPageContainer>
         </Fade>
       </StyledModal>
 
+      {/* wiki info modal */}
       <StyledModal
         open={openDescriptionModal}
         onClose={handleClose}
@@ -397,45 +241,25 @@ export function Graph() {
         disableAutoFocus={true}
       >
         <Fade timeout={500} in={openDescriptionModal}>
-          <Box sx={gridModalStyle}>
-            <Box id="modal-modal-description" sx={{ mt: 2 }}>
-              <Title id="modal-modal-title" variant="h5" component="h1">
-                {name ? name : 'WIP'}
-              </Title>
-
-              <Typography sx={{ mt: 0, fontStyle: 'italic', fontSize: 13 }}>
-                {summary === 'Topics referred to by the same term'
-                  ? null
-                  : summary}
-              </Typography>
-              {bionicMode && language === 'en' ? (
-                <Summary dangerouslySetInnerHTML={description} />
-              ) : (
-                <Summary> {description} </Summary>
-              )}
+          <WikiPageContainer>
+            <Box sx={{ mt: 2 }}>
+              <Title>{name ? name : <CircularProgress />}</Title>
+              <Summary sx={{ mt: 0, fontStyle: 'italic', fontSize: '0.85em' }}>
+                {modalData.summary ? modalData.summary : null}
+              </Summary>
+              <Summary>
+                {modalData.description ? (
+                  modalData.description
+                ) : (
+                  <CircularProgress />
+                )}
+              </Summary>
             </Box>
-
-            <Box alignContent="center" alignItems="center">
-              {thumbnail ? (
-                <img
-                  src={thumbnail.source}
-                  width={200}
-                  alt={`${name}'s portrait`}
-                />
-              ) : (
-                <img
-                  src={
-                    'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
-                  }
-                  width={200}
-                  alt={`${name}'s portrait`}
-                />
-              )}
-            </Box>
-          </Box>
+          </WikiPageContainer>
         </Fade>
       </StyledModal>
 
+      {/* welcome modal */}
       <StyledModal
         open={openLandingModal}
         onClose={() => {
@@ -449,73 +273,104 @@ export function Graph() {
         disableAutoFocus={true}
       >
         <Fade in={openLandingModal} timeout={400}>
-          <Box sx={welcomeModalStyle}>
-            <Typography>{message.p1[language]}</Typography>
+          <WelcomePageContainer>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              Hello and Welcome to this digital exhibition of ideas that shaped
+              Bruce Lee's attitude and outlook on life, success, martial arts
+              and how he went on to inspire generations to come.
+            </Typography>
+
             <Typography
               sx={{
-                mt: 2,
-                p: 1,
-                backgroundColor: 'black',
-                fontSize: 12,
+                my: 2,
+                p: 2,
+                fontSize: '0.8em',
                 color: '#FED206',
-                fontStyle: 'italic',
+                backgroundColor: 'black',
               }}
             >
-              {message.p2[language]}
+              "I, Bruce Lee, am a man who never follows these formulas of the
+              fear mongers. So, no matter if your color is black or white, red
+              or blue, I can still make friends with you without any barriers" -
+              Bruce Lee
+              <br />
+              <br />
+              “Under the sky, under the heavens there is but one family.” -
+              Bruce Lee
             </Typography>
 
-            <Typography sx={{ mt: 2 }}>{message.p3[language]}</Typography>
+            <Typography sx={{ fontSize: 'inherit' }}>
+              This digital exhibition encourages you to keep in mind the theme
+              of “under the heavens there is but one family” as you explore the
+              rich diversity of perspectives that Bruce Lee sought to understand
+              across racial, ethnic, sexuality, religious, citizenship, and
+              political differences. This exhibit also further traces the
+              influence/legacy network of those who influenced him.
+              <br />
+              <br />
+              There will be names that you do not expect to see. This exhibit
+              encourages you to embrace the discomfort and ponder the theme "one
+              family".
+            </Typography>
 
-            <List
+            <Box
               sx={{
-                mt: 2,
-                fontSize: 12,
+                my: 2,
+                p: 2,
+                fontSize: '0.8em',
                 color: '#FED206',
                 backgroundColor: 'black',
               }}
-              dense={true}
-              disablePadding={true}
             >
-              <ListItem>
-                <ListItemText>
-                  <Typography sx={{ fontSize: 'inherit', color: 'inherit' }}>
-                    {message.list.p1[language]}
-                  </Typography>
-                </ListItemText>
-              </ListItem>
+              <Typography sx={{ fontSize: 'inherit' }}>
+                - LINES: Yellow lines connect to Bruce Lee directly, whereas
+                white lines have no direct association.
+              </Typography>
+              <Typography sx={{ mt: 2, fontSize: 'inherit' }}>
+                - All name bubbles are interactive (click for pop-up & drag to
+                move).
+              </Typography>
+            </Box>
 
-              <ListItem>
-                <ListItemText>
-                  <Typography sx={{ fontSize: 'inherit' }}>
-                    {message.list.p2[language]}
-                  </Typography>
-                </ListItemText>
-              </ListItem>
-
-              <ListItem>
-                <ListItemText>
-                  <Typography sx={{ fontSize: 'inherit' }}>
-                    {message.list.p3[language]}
-                  </Typography>
-                </ListItemText>
-              </ListItem>
-            </List>
-
-            <Typography sx={{ mt: 2, fontStyle: 'italic', fontSize: 10 }}>
-              {message.p4[language]}
+            <Typography sx={{ mt: 2, fontStyle: 'italic', fontSize: '0.7em' }}>
+              The intention of this online exhibition is not to completely
+              represent any person's life experiences but rather to serve as a
+              proof of concept. <br />
+              If you wish to contribute to this project, email
+              shoud.zhang@gmail.com
             </Typography>
-          </Box>
+          </WelcomePageContainer>
         </Fade>
       </StyledModal>
 
       <ForceGraph2D
+        /// basic settings ///
         graphData={graphData}
         minZoom={2}
         maxZoom={5}
         ref={fgRef}
         width={width}
         height={height * 0.93}
-        backgroundColor="black"
+        backgroundColor="#000000"
+        /// Link Settings///
+        linkLabel={(link) => `${link.source.id} - ${link.target.id}`}
+        linkColor={({ source, target }) => {
+          if (source.id === 'Bruce Lee' || target.id === 'Bruce Lee')
+            return '#FED206';
+          return 'gray';
+        }}
+        linkWidth={1}
+        linkLineDash={({ source, target }) => {
+          if (source.id === 'Bruce Lee' || target.id === 'Bruce Lee') return [];
+          return [2, 2];
+        }}
+        linkDirectionalParticles={({ source, target }) => {
+          if (source.id === 'Bruce Lee' || target.id === 'Bruce Lee') return 10;
+        }}
+        linkDirectionalParticleSpeed={0.002}
+        linkDirectionalParticleWidth={2.5}
+        linkDirectionalParticleResolution={40}
+        /// Node Settings ///
         onNodeDragEnd={(node) => {
           node.fx = node.x;
           node.fy = node.y;
@@ -531,81 +386,59 @@ export function Graph() {
         onNodeClick={(e) => {
           handleNodeClick(e);
         }}
-        linkLabel={(link) => `${link.source.id} & ${link.target.id}`}
-        linkColor={({ source, target }) => {
-          if (target.type === 'Visitor') return 'green';
-          if (source.id === 'Bruce Lee' || target.id === 'Bruce Lee')
-            return '#FED206';
-          return 'gray';
-        }}
         nodeCanvasObject={(node, ctx, globalScale) => {
-          const label = node[language] || node.en;
-          const color = node.color;
+          const label = node.id;
+          const color = `${node.id === 'Bruce Lee' ? '#FED206' : '	#5e4d08'}`;
           const fontSize =
             label === 'Bruce Lee' ? 16 / globalScale : 12 / globalScale;
           ctx.font = `${fontSize}px Sans-Serif`;
           const textWidth = ctx.measureText(label).width;
           const bckgDimensions = [textWidth, fontSize].map(
-            (n) => n + fontSize * 0.2
+            (n) => n + fontSize * 0.4
           );
-
           ctx.fillStyle = color;
-
           ctx.beginPath();
           ctx.arc(
             node.x,
             node.y,
-            node.id === 'Bruce Lee' ? 20 : 7,
+            node.id === 'Bruce Lee' ? 20 : 5,
             0,
             2 * Math.PI,
             false
           );
           ctx.fill();
-
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillStyle = label === 'Bruce Lee' ? 'black' : 'white';
           ctx.fillText(label, node.x, node.y);
-
           node.__bckgDimensions = bckgDimensions;
         }}
       />
 
-      <Box
+      <FloatButton
         sx={{
           right: 20,
           bottom: 20,
           left: 'auto',
           position: 'fixed',
           top: 'auto',
-          display: 'flex',
+        }}
+        variant="extended"
+        onClick={() => {
+          setAboutModal(true);
         }}
       >
-        <FloatButton
-          variant="extended"
-          onClick={() => {
-            setAddModal(true);
-          }}
-        >
-          <PersonAddIcon />
-          <Typography sx={{ ml: 2 }}>Inspired?</Typography>
-        </FloatButton>
-
-        <FloatButton
-          variant="circular"
-          size="medium"
-          sx={{
-            ml: 2,
-            mr: 2,
-          }}
-          onClick={() => {
-            setVisitorMode(!visitorMode);
-            updateData();
-          }}
-        >
-          {visitorMode ? <PeopleOutlineIcon /> : <PeopleIcon />}
-        </FloatButton>
-      </Box>
+        <AccountBalanceRoundedIcon />
+        <Typography sx={{ ml: 1 }}>About CHSA</Typography>
+      </FloatButton>
+      <ReactHowler
+        src="https://www.mboxdrive.com/bruceleeremix.mp3"
+        playing={mute}
+        loop={true}
+        volume={0.5}
+      />
     </Box>
   );
 }
+
+export default Graph;

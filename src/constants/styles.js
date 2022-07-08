@@ -26,52 +26,63 @@ const GlobalStyle = createGlobalStyle`
     min-height: 790px;
 }`;
 
-const InputField = styled(TextField)(() => ({
-  margin: 2,
-
-  '& .MuiOutlinedInput-root': {
-    '&.Mui-focused fieldset': {
-      borderColor: 'black',
-    },
-  },
-}));
-
-const InputContainer = styled(Box)(() => ({
+const AboutPageContainer = styled(Box)(() => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '25vw',
+  width: '35vw',
   backgroundColor: '#FED206',
-  padding: 20,
+  padding: '2em',
+  fontSize: 16,
   display: 'flex',
+  flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
 
-  ['@media (max-width:800px)']: {
-    bgcolor: '#ffeea2',
+  ['@media (max-width:1400px)']: {
+    width: '40vw',
+    fontSize: 15,
+  },
+
+  ['@media (max-width:900px)']: {
+    width: '60vw',
+    fontSize: 13,
+  },
+
+  ['@media (max-width:300px)']: {
+    width: '80vw',
+    fontSize: 9,
   },
 }));
 
-const SubscriptionCheckBox = styled(Checkbox)(() => ({
-  margin: 1,
+const WelcomePageContainer = styled(Box)(() => ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '50vw',
+  fontSize: 16,
+  backgroundColor: '#FED206',
+  boxShadow: 24,
+  padding: '2em',
 
-  '.MuiCheckbox-colorPrimary.Mui-checked': { color: 'red !important' },
-
-  '&.Mui-checked': {},
+  ['@media (max-Width:1000px)']: {
+    width: '60vw',
+    fontSize: 12,
+  },
+  ['@media (max-Width:400px)']: {
+    width: '80vw',
+    fontSize: 10,
+  },
 }));
 
 const FloatButton = styled(Fab)(() => ({
   margin: 0,
-  // top: 'auto',
-  // right: 20,
-  // bottom: 20,
-  // left: 'auto',
-  // position: 'fixed',
   backgroundColor: '#FED206',
 }));
 
-const SubmitButton = styled(Button)(() => ({
+const BlackButton = styled(Button)(() => ({
   backgroundColor: 'black',
   color: 'white',
   fontWeight: 700,
@@ -82,41 +93,28 @@ const SubmitButton = styled(Button)(() => ({
   },
 }));
 
-const welcomeModalStyle = {
+const WikiPageContainer = styled(Box)(() => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: '#FED206',
-  boxShadow: 24,
-  p: 4,
-  ['@media (max-width:500px)']: {
-    bgcolor: 'orange',
-    width: '75vw',
-    gridTemplateColumns: `repeat(1, 1fr)`,
-  },
-};
-
-////
-const GridModalContainer = styled(Box)(() => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '50vw',
+  width: '40vw',
   backgroundColor: '#FED206',
   boxShadow: 24,
-  p: 4,
-  display: 'grid',
-  columnGap: 3,
+  padding: '2em',
   rowGap: 1,
-  gridTemplateColumns: '2fr 1fr',
 
-  ['@media (max-width:800px)']: {
-    backgroundColor: 'red',
-    width: '75vw',
-    gridTemplateColumns: `repeat(1, 1fr)`,
+  fontSize: 14,
+
+  ['@media (max-width:900px)']: {
+    width: '60vw',
+    justifyContent: 'center',
+    fontSize: 12,
+  },
+  ['@media (max-width:600px)']: {
+    width: '70vw',
+    justifyContent: 'center',
+    fontSize: 10,
   },
 }));
 
@@ -133,30 +131,30 @@ const gridModalStyle = {
   columnGap: 3,
   rowGap: 1,
   gridTemplateColumns: '2fr 1fr',
+  fontSize: 14,
 
-  ['@media (max-width:800px)']: {
-    bgcolor: 'red',
-    width: '75vw',
+  ['@media (max-width:900px)']: {
+    width: '60vw',
+    justifyContent: 'center',
+    fontSize: 12,
+  },
+  ['@media (max-width:600px)']: {
+    width: '70vw',
+    justifyContent: 'center',
+    fontSize: 10,
     gridTemplateColumns: `repeat(1, 1fr)`,
   },
 };
 
 const Title = styled(Typography)(() => ({
   color: 'black',
-  textDecoration: 'underline',
-
-  ['@media (max-width:900px)']: {
-    fontSize: '20px',
-  },
+  fontSize: '1.5em',
 }));
 
 const Summary = styled(Typography)(() => ({
   color: 'black',
   marginTop: '1em',
-
-  ['@media (max-width:900px)']: {
-    fontSize: '14px',
-  },
+  fontSize: '1em',
 }));
 
 const StyledModal = styled(Modal)((props) => ({
@@ -167,15 +165,13 @@ const StyledModal = styled(Modal)((props) => ({
 
 export {
   GlobalStyle,
-  welcomeModalStyle,
   gridModalStyle,
-  InputContainer,
+  AboutPageContainer,
   Title,
   Summary,
   StyledModal,
-  SubmitButton,
-  GridModalContainer,
+  BlackButton,
+  WelcomePageContainer,
   FloatButton,
-  InputField,
-  SubscriptionCheckBox,
+  WikiPageContainer,
 };
