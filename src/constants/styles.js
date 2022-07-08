@@ -26,52 +26,38 @@ const GlobalStyle = createGlobalStyle`
     min-height: 790px;
 }`;
 
-const InputField = styled(TextField)(() => ({
-  margin: 2,
-
-  '& .MuiOutlinedInput-root': {
-    '&.Mui-focused fieldset': {
-      borderColor: 'black',
-    },
-  },
-}));
-
-const InputContainer = styled(Box)(() => ({
+const AboutPageContainer = styled(Box)(() => ({
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '25vw',
+  width: '30vw',
   backgroundColor: '#FED206',
   padding: 20,
   display: 'flex',
+  flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
 
-  ['@media (max-width:800px)']: {
-    bgcolor: '#ffeea2',
+  ['@media (max-width:1400px)']: {
+    width: '40vw',
   },
-}));
 
-const SubscriptionCheckBox = styled(Checkbox)(() => ({
-  margin: 1,
+  ['@media (max-width:900px)']: {
+    width: '60vw',
+  },
 
-  '.MuiCheckbox-colorPrimary.Mui-checked': { color: 'red !important' },
-
-  '&.Mui-checked': {},
+  ['@media (max-width:900px)']: {
+    width: '80vw',
+  },
 }));
 
 const FloatButton = styled(Fab)(() => ({
   margin: 0,
-  // top: 'auto',
-  // right: 20,
-  // bottom: 20,
-  // left: 'auto',
-  // position: 'fixed',
   backgroundColor: '#FED206',
 }));
 
-const SubmitButton = styled(Button)(() => ({
+const BlackButton = styled(Button)(() => ({
   backgroundColor: 'black',
   color: 'white',
   fontWeight: 700,
@@ -87,38 +73,20 @@ const welcomeModalStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '40vw',
+  fontSize: 13,
   bgcolor: '#FED206',
   boxShadow: 24,
-  p: 4,
-  ['@media (max-width:500px)']: {
-    bgcolor: 'orange',
-    width: '75vw',
-    gridTemplateColumns: `repeat(1, 1fr)`,
+  p: 3,
+  pt: 6,
+  pb: 6,
+  ['@media (max-Width:1000px)']: {
+    width: '60vw',
+  },
+  ['@media (max-Width:400px)']: {
+    width: '80vw',
   },
 };
-
-////
-const GridModalContainer = styled(Box)(() => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '50vw',
-  backgroundColor: '#FED206',
-  boxShadow: 24,
-  p: 4,
-  display: 'grid',
-  columnGap: 3,
-  rowGap: 1,
-  gridTemplateColumns: '2fr 1fr',
-
-  ['@media (max-width:800px)']: {
-    backgroundColor: 'red',
-    width: '75vw',
-    gridTemplateColumns: `repeat(1, 1fr)`,
-  },
-}));
 
 const gridModalStyle = {
   position: 'absolute',
@@ -134,9 +102,9 @@ const gridModalStyle = {
   rowGap: 1,
   gridTemplateColumns: '2fr 1fr',
 
-  ['@media (max-width:800px)']: {
-    bgcolor: 'red',
-    width: '75vw',
+  ['@media (max-width:700px)']: {
+    width: '70vw',
+    justifyContent: 'center',
     gridTemplateColumns: `repeat(1, 1fr)`,
   },
 };
@@ -169,13 +137,10 @@ export {
   GlobalStyle,
   welcomeModalStyle,
   gridModalStyle,
-  InputContainer,
+  AboutPageContainer,
   Title,
   Summary,
   StyledModal,
-  SubmitButton,
-  GridModalContainer,
+  BlackButton,
   FloatButton,
-  InputField,
-  SubscriptionCheckBox,
 };
