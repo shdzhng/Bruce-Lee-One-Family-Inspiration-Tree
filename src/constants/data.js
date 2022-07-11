@@ -1170,7 +1170,8 @@ export const linkData = [
     target: 'Plato',
   },
 ];
-const graphData = {
+
+export const graphData = {
   nodes: nodeData,
   links: linkData,
 };

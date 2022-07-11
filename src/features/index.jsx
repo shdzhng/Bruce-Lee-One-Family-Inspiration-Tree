@@ -35,15 +35,11 @@ import {
   BlackButton,
   FloatButton,
 } from '../constants/styles';
-
-const defaultGraphData = {
-  nodes: nodeData,
-  links: linkData,
-};
+import { graphData } from '../constants/data';
 
 function Graph() {
   const [name, setName] = useState(null);
-  const [graphData, setGraphData] = useState(defaultGraphData);
+
   const [modalData, setModalData] = useState({
     thumbnail: null,
     description: null,
@@ -52,10 +48,9 @@ function Graph() {
   const [openDescriptionModal, setOpenDescriptionModal] = React.useState(false);
   const [openLandingModal, setOpenLandingModal] = React.useState(false);
   const [openAboutModal, setAboutModal] = React.useState(false);
-
   const [mute, setMute] = useState(false);
-  const fgRef = useRef();
   const [width, height] = useWindowSize();
+  const fgRef = useRef();
 
   useEffect(() => {
     setTimeout(() => {
@@ -63,15 +58,14 @@ function Graph() {
     }, 300);
   }, []);
 
-  const toggleMute = useCallback(() => {
+  const toggleMute = () => {
     setMute(!mute);
-  }, []);
+  };
 
   const handleClose = useCallback(() => {
     setOpenDescriptionModal(false);
     setOpenLandingModal(false);
     setAboutModal(false);
-
     setTimeout(() => {
       setModalData({
         thumbnail: null,
