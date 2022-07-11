@@ -7,13 +7,12 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import { ForceGraph2D } from 'react-force-graph';
-import { nodeData, linkData } from '../../constants/data';
+import { nodeData, linkData } from '../constants/data';
 import InfoIcon from '@mui/icons-material/Info';
 import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
 import { useWindowSize } from '@react-hook/window-size';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeMuteIcon from '@mui/icons-material/VolumeMute';
-import { Howl, Howler } from 'howler';
 import {
   Box,
   Typography,
@@ -35,7 +34,7 @@ import {
   WikiPageContainer,
   BlackButton,
   FloatButton,
-} from '../../constants/styles';
+} from '../constants/styles';
 
 const defaultGraphData = {
   nodes: nodeData,
@@ -54,7 +53,7 @@ function Graph() {
   const [openLandingModal, setOpenLandingModal] = React.useState(false);
   const [openAboutModal, setAboutModal] = React.useState(false);
 
-  const [mute, setMute] = useState(true);
+  const [mute, setMute] = useState(false);
   const fgRef = useRef();
   const [width, height] = useWindowSize();
 
@@ -64,29 +63,11 @@ function Graph() {
     }, 300);
   }, []);
 
-  const toggleMute = () => {
+  const toggleMute = useCallback(() => {
     setMute(!mute);
-  };
+  }, []);
 
-  useEffect(() => {
-    // if (sound !== null) {
-    //   console.dir(sound);
-    //   sound.stop(sound);
-    //   sound.unload(sound);
-    //   Howler.stop(sound);
-    //   sound = null;
-    // } else {
-    //   sound = new Howl({
-    //     src: '',
-    //     html5: true,
-    //     loop: true,
-    //     volume: 0.2,
-    //   });
-    //   sound.play();
-    // }
-  }, [mute]);
-
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpenDescriptionModal(false);
     setOpenLandingModal(false);
     setAboutModal(false);
@@ -98,7 +79,7 @@ function Graph() {
         summary: null,
       });
     }, 500);
-  };
+  }, []);
 
   const data = useMemo(() => {
     const returnedData = {};
@@ -330,6 +311,10 @@ function Graph() {
                 - All name bubbles are interactive (click for pop-up & drag to
                 move).
               </Typography>
+              <Typography sx={{ mt: 2, fontSize: 'inherit' }}>
+                - Click <VolumeOffIcon sx={{ fontSize: '1.5em' }} /> to toggle
+                sound
+              </Typography>
             </Box>
 
             <Typography sx={{ mt: 2, fontStyle: 'italic', fontSize: '0.7em' }}>
@@ -370,12 +355,6 @@ function Graph() {
         linkDirectionalParticleSpeed={0.002}
         linkDirectionalParticleWidth={2.5}
         linkDirectionalParticleResolution={40}
-        /// Node Settings ///
-        onNodeDragEnd={(node) => {
-          node.fx = node.x;
-          node.fy = node.y;
-          node.fz = node.z;
-        }}
         nodePointerAreaPaint={(node, color, ctx) => {
           ctx.fillStyle = color;
           const bckgDimensions = node.__bckgDimensions;
