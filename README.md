@@ -21,7 +21,7 @@ A digital exhibition of ideas that shaped Bruce Lee's attitude and outlook on li
 ### Installation
 1. Clone the repository 
  ```
- $ git clone https://github.com/shdzhng/Mooday-Journal-Mood-Tracker
+ $ git clone https://github.com/shdzhng/Bruce-Lee-One-Family-Inspiration-Tree
  ```
 2. Install the node package
  ```
