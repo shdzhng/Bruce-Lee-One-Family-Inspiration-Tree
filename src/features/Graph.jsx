@@ -45,6 +45,11 @@ function Graph({ setOpenDescriptionModal, setName, width, height }) {
       onNodeClick={(e) => {
         handleNodeClick(e);
       }}
+      onNodeDragEnd={(node) => {
+        node.fx = node.x;
+        node.fy = node.y;
+        node.fz = node.z;
+      }}
       nodeCanvasObject={(node, ctx, globalScale) => {
         const label = node.id;
         const color = `${node.id === 'Bruce Lee' ? '#FED206' : '	#5e4d08'}`;
