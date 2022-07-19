@@ -18,7 +18,6 @@ function App() {
   const [width, height] = useWindowSize();
   const [modalData, setModalData] = useState({
     name: null,
-    thumbnail: null,
     description: null,
     summary: null,
   });
@@ -51,17 +50,20 @@ function App() {
         });
     });
 
+
     return returnedData;
   }, []);
 
-  const setCurrentData = useCallback((name) => {
-    const dataPackage = {
-      thumbnail: data[name].thumbnail.source,
-      description: data[name].extract,
-      summary: data[name].description,
-    };
-    setModalData(dataPackage);
-  }, []);
+  const setCurrentData = useCallback(
+    (name) => {
+      const dataPackage = {
+        description: data[name].extract,
+        summary: data[name].description,
+      };
+      setModalData(dataPackage);
+    },
+    [name]
+  );
 
   useEffect(() => {
     if (!name) return;
@@ -88,6 +90,7 @@ function App() {
         handleClose={handleClose}
         modalData={modalData}
         name={name}
+        data={data}
         openDescriptionModal={openDescriptionModal}
       />
       <AboutModal handleClose={handleClose} openAboutModal={openAboutModal} />
