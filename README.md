@@ -4,7 +4,7 @@
 </div>
 
 ## About The Project
-A digital exhibition of ideas that shaped Bruce Lee's attitude and outlook on life, success, martial arts and how he went on to inspire generations to come. This digital exhibition encourages users to keep in mind the theme of “under the heavens there is but one family” as users explore the rich diversity of perspectives that Bruce Lee sought to understand across racial, ethnic, sexuality, religious, citizenship, and political differences. This exhibit also further traces the influence/legacy network of those who influenced Bruce. There will be names that users do not expect to see. This exhibit encourages users to embrace the discomfort and ponder the theme "one family". [**LIVE DEMO HERE**](https://bruceleeinspirationtree.web.app/)
+A digital exhibition of ideas that shaped Bruce Lee's attitude and outlook on life, success, martial arts and how he went on to inspire generations to come. This digital exhibition encourage visitors to keep in mind the theme of “under the heavens there is but one family” as visitors explore the rich diversity of perspectives that Bruce Lee sought to understand across racial, ethnic, sexuality, religious, citizenship, and political differences. This exhibit also further traces the influence/legacy network of those who influenced Bruce. There will be names that users do not expect to see. This exhibit encourages visitors to embrace the discomfort and ponder the theme "one family". [**LIVE DEMO HERE**](https://bruceleeinspirationtree.web.app/)
 
 * Employed **React**, **MUI**, and **styled-components** to construct a responsive UI layout for users to display data fetched from **WikiMedia API** based on user click activity.
 
